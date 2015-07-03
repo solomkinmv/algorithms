@@ -1,11 +1,10 @@
-def counting_sort(a):
+def counting_sort(a, k):
     """
-    Counting sort function
-    :param a: original array
-    :return: sorted array
+    Counting sort function.
+    :param a: original array.
+    :param k: count of numbers from 0 to max(a).
+    :return: sorted array.
     """
-    # get size of c array for numbers 0..max(a)
-    k = max(a) + 1
     # create new array with size k and filled 0 values
     c = [0] * k
     b = list(a)
@@ -29,5 +28,6 @@ def counting_sort(a):
 
 if __name__ == '__main__':
     a = [2, 8, 7, 1, 3, 5, 6, 4]
-    b = counting_sort(a)
+    k = max(a) + 1  # count of numbers from 0 to max(a)
+    b = counting_sort(a, k)
     print b
