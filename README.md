@@ -21,6 +21,8 @@ Radix sort, fast sorting algorithms for integer numbers. Digit sort based on
 ## Data Structures
 * [max-heap](https://github.com/TheStigger/algorithms/blob/master/data-structures/max-heap.py) - 
 tree-based data structure, stored in array.
+* [priority-queue](https://github.com/TheStigger/algorithms/blob/master/data-structures/priority-queue.py) - 
+queue with priorities (priority queue), based on [max heap](https://github.com/TheStigger/algorithms/blob/master/data-structures/priority-queue.py).
 
 ## Arithmetical Algorithms
 * [karatsuba_multiply](https://github.com/TheStigger/algorithms/blob/master/arithmetical-algorithms/karatsuba_multiply.py) - 
