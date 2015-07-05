@@ -1,5 +1,7 @@
 # Algorithms
-Collection of different algorithms
+Collection of different algorithms.
+
+Below there are short descriptions of algorithms and links to them in repository.
 
 ## Sorting Algorithms
 * [insertion-sort](https://github.com/TheStigger/algorithms/blob/master/sorting-algorithms/insertion-sort.py) - 
@@ -17,6 +19,8 @@ Radix sort, fast sorting algorithms for integer numbers. Digit sort based on
 [counting sort](https://github.com/TheStigger/algorithms/blob/master/sorting-algorithms/counting-sort.py), fast sorting algorithm for small integers.
 
 ## Data Structures
+* [max-heap](https://github.com/TheStigger/algorithms/blob/master/data-structures/max-heap.py) - 
+tree-based data structure, stored in array.
 
 ## Arithmetical Algorithms
 * [karatsuba_multiply](https://github.com/TheStigger/algorithms/blob/master/arithmetical-algorithms/karatsuba_multiply.py) - 
