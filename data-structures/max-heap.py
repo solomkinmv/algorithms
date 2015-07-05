@@ -84,6 +84,11 @@ class Heap(object):
             i -= 1
 
     def heap_sort(self):
+        """
+        Sort array using heap.
+
+        :return: sorted array.
+        """
         i = self.get_heap_size()
         while i >= 1:
             self.array[0], self.array[i] = self.array[i], self.array[0]
@@ -91,7 +96,8 @@ class Heap(object):
             self.max_heapify(0)
             i -= 1
 
-        print self.array
+        self.last = len(self.array) - 1
+        return self.array
 
     def show(self):
         """
@@ -113,4 +119,5 @@ if __name__ == '__main__':
     a = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
     heap = Heap(a)
     heap.show()
-    heap.heap_sort()
+    b = heap.heap_sort()
+    print b
