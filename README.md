@@ -38,6 +38,11 @@ algorithm to find all components in graph, based on [BFS](https://github.com/The
 Recursive Depth-First Search, recursive realization of algorithm for traversing 
 or searching graph data structures. This algorithm is alternative to 
 [BFS](https://github.com/TheStigger/algorithms/blob/master/graphs/bfs.py).
+* [DFS](https://github.com/TheStigger/algorithms/blob/master/graphs/dfs.py) - 
+Depth-First Search, iterational realization of algorithm for traversing 
+or searching graph data structures. This algorithm is alternative to 
+[BFS](https://github.com/TheStigger/algorithms/blob/master/graphs/bfs.py) and 
+realized very similar to it unlike DFSR realization.
 
 ## Arithmetical Algorithms
 * [karatsuba_multiply](https://github.com/TheStigger/algorithms/blob/master/arithmetical-algorithms/karatsuba_multiply.py) - 
