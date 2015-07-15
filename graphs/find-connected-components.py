@@ -3,7 +3,7 @@ def find_connected_components(G):
     Find connected components.
     :param G: graph dictionary.
     """
-    investigated = []  # list of investigated vertexes
+    investigated = []  # list of investigated vertices
     components = []  # list of components
     n = 0  # count of components
 

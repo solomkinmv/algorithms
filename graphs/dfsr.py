@@ -28,6 +28,6 @@ if __name__ == '__main__':
     graph['e'] = ['c', 'd']
 
     print 'DFSR'
-    vertexes = {}
-    dfsr(graph, 's', 1, vertexes)
-    print vertexes
+    vertices = {}
+    dfsr(graph, 's', 1, vertices)
+    print vertices
