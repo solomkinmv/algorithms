@@ -34,6 +34,10 @@ Shortest Path Search based on [BFS](https://github.com/TheStigger/algorithms/blo
 algorithm.
 * [find-connected-components](https://github.com/TheStigger/algorithms/blob/master/graphs/find-connected-components.py) - 
 algorithm to find all components in graph, based on [BFS](https://github.com/TheStigger/algorithms/blob/master/graphs/bfs.py).
+* [DFSR](https://github.com/TheStigger/algorithms/blob/master/graphs/dfsr.py) - 
+Recursive Depth-First Search, recursive realization of algorithm for traversing 
+or searching graph data structures. This algorithm is alternative to 
+[BFS](https://github.com/TheStigger/algorithms/blob/master/graphs/bfs.py).
 
 ## Arithmetical Algorithms
 * [karatsuba_multiply](https://github.com/TheStigger/algorithms/blob/master/arithmetical-algorithms/karatsuba_multiply.py) - 
