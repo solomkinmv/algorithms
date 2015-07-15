@@ -29,9 +29,11 @@ binary search tree without self-balancing.
 ## Graphs
 * [BFS](https://github.com/TheStigger/algorithms/blob/master/graphs/bfs.py) - 
 Breadth-First Search, algorithm for traversing or searching graph data structures.
-* [shortest-path-search](https://github.com/TheStigger/algorithms/blob/master/graphs/bfs.py) - 
+* [shortest-path-search](https://github.com/TheStigger/algorithms/blob/master/graphs/shortest-path-search.py) - 
 Shortest Path Search based on [BFS](https://github.com/TheStigger/algorithms/blob/master/graphs/bfs.py) 
 algorithm.
+* [find-connected-components](https://github.com/TheStigger/algorithms/blob/master/graphs/find-connected-components.py) - 
+algorithm to find all components in graph, based on [BFS](https://github.com/TheStigger/algorithms/blob/master/graphs/bfs.py).
 
 ## Arithmetical Algorithms
 * [karatsuba_multiply](https://github.com/TheStigger/algorithms/blob/master/arithmetical-algorithms/karatsuba_multiply.py) - 
