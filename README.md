@@ -43,6 +43,8 @@ Depth-First Search, iterational realization of algorithm for traversing
 or searching graph data structures. This algorithm is alternative to 
 [BFS](https://github.com/TheStigger/algorithms/blob/master/graphs/bfs.py) and 
 realized very similar to it unlike DFSR realization.
+* [topological-sort](https://github.com/TheStigger/algorithms/blob/master/graphs/topological-sort.py) - 
+Topological Sort, linear ordering of directed graph's vertices.
 
 ## Arithmetical Algorithms
 * [karatsuba_multiply](https://github.com/TheStigger/algorithms/blob/master/arithmetical-algorithms/karatsuba_multiply.py) - 
