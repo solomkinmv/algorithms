@@ -26,6 +26,10 @@ queue with priorities (priority queue), based on [max heap](https://github.com/T
 * [binary-tree](https://github.com/TheStigger/algorithms/blob/master/data-structures/binary-tree.py) - 
 binary search tree without self-balancing.
 
+## Graphs
+* [BFS](https://github.com/TheStigger/algorithms/blob/master/graphs/bfs.py) - 
+Breadth-First Search, algorithm for traversing or searching graph data structures.
+
 ## Arithmetical Algorithms
 * [karatsuba_multiply](https://github.com/TheStigger/algorithms/blob/master/arithmetical-algorithms/karatsuba_multiply.py) - 
 recursive realization of fast multiplication algorithm (the Karatsuba algorithm).
