@@ -1,4 +1,9 @@
 def topological_sort(G):
+    """
+    Topological sort of graph.
+    :param G: graph dictionary.
+    :return: graph vertices in ascending order.
+    """
     investigated = []  # list of investigated vertices
     topology = []  # graph topology
 
