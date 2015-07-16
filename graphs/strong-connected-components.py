@@ -2,7 +2,7 @@ def strong_connected_components(G):
     """
     Get strong connected components.
     1. Get indices of vertices. The most connected vertices will
-    be earlier in list.
+    be earlier in list. From these elements we can go further in graph.
     2. Invert graph.
     3. Go through vertices in indices list. Every DFSR cycle gets
     one component.
@@ -90,4 +90,4 @@ if __name__ == '__main__':
     graph['h'] = []
 
     print 'Strong Connected Components'
-    strong_connected_components(graph)
+    print strong_connected_components(graph)
