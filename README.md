@@ -46,6 +46,9 @@ realized very similar to it unlike DFSR realization.
 * [topological-sort](https://github.com/TheStigger/algorithms/blob/master/graphs/topological-sort.py) - 
 Topological Sort, linear ordering of directed graph's vertices. This 
 realization uses [DFSR](https://github.com/TheStigger/algorithms/blob/master/graphs/dfsr.py).
+* [strong-connected-components](https://github.com/TheStigger/algorithms/blob/master/graphs/strong-connected-components.py) - 
+algorithm to find all components in directed graph. This 
+realization uses [DFSR](https://github.com/TheStigger/algorithms/blob/master/graphs/dfsr.py).
 
 ## Arithmetical Algorithms
 * [karatsuba_multiply](https://github.com/TheStigger/algorithms/blob/master/arithmetical-algorithms/karatsuba_multiply.py) - 
