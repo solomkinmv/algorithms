@@ -1,4 +1,6 @@
 ## Sorting Algorithms
+* [bubbleSort]()(https://github.com/TheStigger/algorithms/blob/master/sorting-algorithms/BubbleSort.java) - 
+Bubble sort, simple sorting algorithm. Good for small sorted or mostly sorted arrays.
 * [insertion-sort](https://github.com/TheStigger/algorithms/blob/master/sorting-algorithms/insertion-sort.py) -
 Insertion sort, simple sorting algorithm.
 * [merge-sort](https://github.com/TheStigger/algorithms/blob/master/sorting-algorithms/merge-sort.py) -
