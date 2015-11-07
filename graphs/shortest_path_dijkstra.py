@@ -17,8 +17,8 @@ def dijkstra(G, start, end):
 
         v = min(V - x, key=lambda arg: distances[arg])
         x.add(v)
-        # if v == end:
-        #     break
+        if v == end:
+            break
 
     return distances, precusors
 
