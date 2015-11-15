@@ -12,9 +12,7 @@ def dfsr(G, vertex, k, investigated=None):
 
     for u in G[vertex]:
         if u not in investigated:
-            k = dfsr(G, u, k+1, investigated)
-
-    return k
+            dfsr(G, u, k + 1, investigated)
 
 
 if __name__ == '__main__':
