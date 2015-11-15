@@ -9,14 +9,14 @@ def partition(array, p, r):
     :return: return x index.
     """
     x = array[r]
-    i = p - 1
+    i = p
     for j in range(p, r):
         if array[j] <= x:
-            i += 1
             array[j], array[i] = array[i], array[j]
-    array[i + 1], array[r] = x, array[i + 1]
+            i += 1
+    array[i], array[r] = x, array[i]
 
-    return i + 1
+    return i
 
 
 def quick_sort(array, p, r):
