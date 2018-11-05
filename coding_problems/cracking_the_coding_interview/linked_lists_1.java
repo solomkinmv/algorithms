@@ -1,3 +1,5 @@
+package cracking_the_coding_interview;
+
 import java.util.HashSet;
 
 /**
@@ -9,6 +11,27 @@ class Node {
 
     public Node(int v) {
         value = v;
+    }
+
+    public static void main(String[] args) {
+        Node n = new Node(1);
+        n.append(2);
+        n.append(3);
+        n.append(4);
+        n.append(5);
+        n.append(6);
+        n.append(5);
+        n.append(7);
+        n.append(8);
+        n.append(9);
+
+        n.removeDuplicates2();
+
+        Node tmp = n;
+        while (tmp != null) {
+            System.out.println(tmp.value);
+            tmp = tmp.next;
+        }
     }
 
     public void append(int v) {
@@ -45,27 +68,6 @@ class Node {
                 runner = runner.next;
             }
             n = n.next;
-        }
-    }
-
-    public static void main(String[] args) {
-        Node n = new Node(1);
-        n.append(2);
-        n.append(3);
-        n.append(4);
-        n.append(5);
-        n.append(6);
-        n.append(5);
-        n.append(7);
-        n.append(8);
-        n.append(9);
-        
-        n.removeDuplicates2();
-
-        Node tmp = n;
-        while (tmp != null) {
-            System.out.println(tmp.value);
-            tmp = tmp.next;
         }
     }
 }
