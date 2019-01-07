@@ -1,3 +1,5 @@
+package algorithms.misc;
+
 class Reverse {
     static String reverse(String s) {
         char[] chArray = s.toCharArray();

@@ -1,4 +1,4 @@
-package cracking_the_coding_interview;
+package coding_problems.cracking_the_coding_interview;
 
 import java.util.HashSet;
 

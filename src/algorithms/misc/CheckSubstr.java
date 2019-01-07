@@ -1,3 +1,5 @@
+package algorithms.misc;
+
 class CheckSubstr {
     static int checkSubstr(String s, String sub) {
         for (int i = 0; i < s.length() - sub.length() + 1; i++) {

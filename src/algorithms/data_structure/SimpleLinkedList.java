@@ -1,3 +1,5 @@
+package algorithms.data_structure;
+
 /**
  * Simple Linked List with append method
  */

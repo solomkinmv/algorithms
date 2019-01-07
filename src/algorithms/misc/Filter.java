@@ -1,3 +1,5 @@
+package algorithms.misc;
+
 import java.util.Arrays;
 
 class Filter {

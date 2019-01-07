@@ -1,3 +1,5 @@
+package algorithms.sort;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

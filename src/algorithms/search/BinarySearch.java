@@ -1,3 +1,5 @@
+package algorithms.search;
+
 class BinarySearch {
     static int binarySearch(int[] array, int value, int p, int q) {
         int mid = (p + q) / 2;

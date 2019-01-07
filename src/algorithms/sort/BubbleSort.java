@@ -1,3 +1,5 @@
+package algorithms.sort;
+
 import java.util.Arrays;
 
 class BubbleSort {
