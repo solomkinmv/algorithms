@@ -1,19 +1,18 @@
 package algorithms.graph.operations;
 
 import algorithms.graph.Graph;
+import io.vavr.collection.List;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class DepthFirstSearchPaths {
-    private final Graph graph;
-    private final int source;
-    private final Map<Integer, Boolean> marked = new HashMap<>();
-    private final Map<Integer, Integer> pathTo = new HashMap<>();
+public abstract class DepthFirstSearchPaths {
+    final Graph graph;
+    final int source;
+    final Map<Integer, Boolean> marked = new HashMap<>();
+    final Map<Integer, Integer> pathTo = new HashMap<>();
 
     public DepthFirstSearchPaths(Graph graph, int source) {
         this.graph = graph;
@@ -29,16 +28,15 @@ public class DepthFirstSearchPaths {
         return marked.getOrDefault(destination, false);
     }
 
-    public Optional<Collection<Integer>> pathTo(int destination) {
+    public Optional<List<Integer>> pathTo(int destination) {
         if (hasPathTo(destination)) {
             int current = destination;
-            LinkedList<Integer> result = new LinkedList<>();
+            List<Integer> result = List.empty();
             while (current != source) {
-                result.addFirst(current);
+                result = result.prepend(current);
                 current = pathTo.get(current);
             }
-            result.addFirst(current);
-            return Optional.of(result);
+            return Optional.of(result.prepend(current));
         }
 
         return Optional.empty();
@@ -59,22 +57,13 @@ public class DepthFirstSearchPaths {
                              .collect(Collectors.joining(", "));
     }
 
-    private void dfs(int vertex) {
-        markVertexAsInvestigated(vertex);
+    abstract void dfs(int vertex);
 
-        for (int adjacentVertex : graph.adjacentVertices(vertex)) {
-            if (hasPathTo(adjacentVertex)) continue;
-
-            recordPathToVertex(adjacentVertex, vertex);
-            dfs(adjacentVertex);
-        }
-    }
-
-    private void recordPathToVertex(int vertex, int parentVertex) {
+    void recordPathToVertex(int vertex, int parentVertex) {
         pathTo.putIfAbsent(vertex, parentVertex);
     }
 
-    private void markVertexAsInvestigated(int vertex) {
+    void markVertexAsInvestigated(int vertex) {
         marked.put(vertex, true);
     }
 }
