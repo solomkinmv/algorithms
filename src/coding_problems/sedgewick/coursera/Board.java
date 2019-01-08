@@ -1,6 +1,6 @@
 package coding_problems.sedgewick.coursera;
 
-import javafx.util.Pair;
+import io.vavr.Tuple2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,14 +84,14 @@ public class Board {
     }
 
     public Board twin() {
-        Pair<Integer, Integer> previousPair = null;
+        Tuple2<Integer, Integer> previousPair = null;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (tiles[i][j] != 0) {
                     if (previousPair == null) {
-                        previousPair = new Pair<>(i, j);
+                        previousPair = new Tuple2<>(i, j);
                     } else {
-                        return swap(i, j, previousPair.getKey(), previousPair.getValue());
+                        return swap(i, j, previousPair._1, previousPair._2);
                     }
                 }
             }
@@ -130,8 +130,8 @@ public class Board {
 
     public Iterable<Board> neighbors() {
         List<Board> boards = new ArrayList<>();
-        Pair<Integer, Integer> blankPoint = findBlank();
-        int i = blankPoint.getKey(), j = blankPoint.getValue();
+        Tuple2<Integer, Integer> blankPoint = findBlank();
+        int i = blankPoint._1, j = blankPoint._2;
 
         Board newBoard;
         newBoard = nullableSwap(i, j, i - 1, j);
@@ -152,11 +152,11 @@ public class Board {
         }
     }
 
-    private Pair<Integer, Integer> findBlank() {
+    private Tuple2<Integer, Integer> findBlank() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (tiles[i][j] == 0) {
-                    return new Pair<>(i, j);
+                    return new Tuple2<>(i, j);
                 }
             }
         }
