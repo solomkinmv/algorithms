@@ -8,20 +8,17 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class DepthFirstSearchPaths {
+public abstract class SearchPaths {
     final Graph graph;
-    final int source;
-    final Map<Integer, Boolean> marked = new HashMap<>();
-    final Map<Integer, Integer> pathTo = new HashMap<>();
+    private final int source;
+    private final Map<Integer, Boolean> marked = new HashMap<>();
+    private final Map<Integer, Integer> pathTo = new HashMap<>();
 
-    public DepthFirstSearchPaths(Graph graph, int source) {
+    public SearchPaths(Graph graph, int source) {
         this.graph = graph;
         this.source = source;
 
-        graph.getVertices()
-             .forEach(v -> marked.put(v, false));
-
-        dfs(source);
+        search(source);
     }
 
     public boolean hasPathTo(int destination) {
@@ -57,7 +54,7 @@ public abstract class DepthFirstSearchPaths {
                              .collect(Collectors.joining(", "));
     }
 
-    abstract void dfs(int vertex);
+    abstract void search(int vertex);
 
     void recordPathToVertex(int vertex, int parentVertex) {
         pathTo.putIfAbsent(vertex, parentVertex);

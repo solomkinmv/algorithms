@@ -11,11 +11,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-abstract class DepthFirstSearchPathsTest {
+abstract class SearchPathsTest {
 
     final int source = 0;
     Graph graph;
-    private DepthFirstSearchPaths depthFirstSearchPaths;
+    SearchPaths searchPaths;
 
     @BeforeEach
     void setUp() {
@@ -34,29 +34,29 @@ abstract class DepthFirstSearchPathsTest {
 
         graph.addEdge(100500, 500100);
 
-        depthFirstSearchPaths = createDepthFirstSearchPaths();
+        searchPaths = createSearchPaths();
     }
 
-    abstract DepthFirstSearchPaths createDepthFirstSearchPaths();
+    abstract SearchPaths createSearchPaths();
 
     @ParameterizedTest
     @ValueSource(ints = {source, 1, 2, 3, 4, 5})
     void returnsTrueConnectedVertices(int connectedVertex) {
-        assertThat(depthFirstSearchPaths.hasPathTo(connectedVertex))
+        assertThat(searchPaths.hasPathTo(connectedVertex))
                 .isTrue();
     }
 
     @ParameterizedTest
     @ValueSource(ints = {100500, 500100})
     void returnsFalseForNotCollectedVertices(int notConnectedVertex) {
-        assertThat(depthFirstSearchPaths.hasPathTo(notConnectedVertex))
+        assertThat(searchPaths.hasPathTo(notConnectedVertex))
                 .isFalse();
     }
 
     @ParameterizedTest
     @ValueSource(ints = {source, 1, 2, 3, 4, 5})
     void createsCorrectPathTo(int vertexDestination) {
-        Optional<List<Integer>> pathTo = depthFirstSearchPaths.pathTo(vertexDestination);
+        Optional<List<Integer>> pathTo = searchPaths.pathTo(vertexDestination);
 
         assertThat(pathTo).isPresent();
         assertPath(pathTo.get(), vertexDestination);
@@ -65,7 +65,7 @@ abstract class DepthFirstSearchPathsTest {
     @ParameterizedTest
     @ValueSource(ints = {100500, 500100})
     void returnsEmptyOptionalForNotConnectedVertex(int notConnectedVertex) {
-        Optional<List<Integer>> pathTo = depthFirstSearchPaths.pathTo(notConnectedVertex);
+        Optional<List<Integer>> pathTo = searchPaths.pathTo(notConnectedVertex);
 
         assertThat(pathTo).isEmpty();
     }

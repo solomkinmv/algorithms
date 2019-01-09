@@ -1,8 +1,8 @@
 package algorithms.graph.operations;
 
-public class IterativeDepthFirstSearchPathsTest extends DepthFirstSearchPathsTest {
+public class IterativeDepthFirstSearchPathsTest extends SearchPathsTest {
     @Override
-    DepthFirstSearchPaths createDepthFirstSearchPaths() {
+    SearchPaths createSearchPaths() {
         return new IterativeDepthFirstSearchPaths(graph, source);
     }
 }

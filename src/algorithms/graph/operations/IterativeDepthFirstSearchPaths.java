@@ -4,14 +4,14 @@ import algorithms.graph.Graph;
 
 import java.util.LinkedList;
 
-public class IterativeDepthFirstSearchPaths extends DepthFirstSearchPaths {
+public class IterativeDepthFirstSearchPaths extends SearchPaths {
 
     public IterativeDepthFirstSearchPaths(Graph graph, int source) {
         super(graph, source);
     }
 
     @Override
-    void dfs(int vertex) {
+    void search(int vertex) {
         LinkedList<Integer> stack = new LinkedList<>();
         stack.push(vertex);
 
