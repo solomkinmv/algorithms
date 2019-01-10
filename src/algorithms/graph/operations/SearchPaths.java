@@ -1,9 +1,9 @@
 package algorithms.graph.operations;
 
 import algorithms.graph.Graph;
-import io.vavr.collection.List;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,15 +25,15 @@ public abstract class SearchPaths {
         return marked.getOrDefault(destination, false);
     }
 
-    public Optional<List<Integer>> pathTo(int destination) {
+    public Optional<java.util.List<Integer>> pathTo(int destination) {
         if (hasPathTo(destination)) {
             int current = destination;
-            List<Integer> result = List.empty();
+            LinkedList<Integer> result = new LinkedList<>();
             while (current != source) {
-                result = result.prepend(current);
+                result.addFirst(current);
                 current = pathTo.get(current);
             }
-            return Optional.of(result.prepend(current));
+            return Optional.of(result);
         }
 
         return Optional.empty();

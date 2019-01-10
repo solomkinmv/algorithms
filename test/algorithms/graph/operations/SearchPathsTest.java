@@ -2,13 +2,15 @@ package algorithms.graph.operations;
 
 import algorithms.graph.Graph;
 import algorithms.graph.UndirectedGraph;
-import io.vavr.collection.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
 import java.util.Optional;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 abstract class SearchPathsTest {
@@ -54,12 +56,20 @@ abstract class SearchPathsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {source, 1, 2, 3, 4, 5})
+    @ValueSource(ints = {1, 2, 3, 4, 5})
     void createsCorrectPathTo(int vertexDestination) {
         Optional<List<Integer>> pathTo = searchPaths.pathTo(vertexDestination);
 
         assertThat(pathTo).isPresent();
         assertPath(pathTo.get(), vertexDestination);
+    }
+
+    @Test
+    void pathToSelfIsEmpty() {
+        Optional<List<Integer>> pathTo = searchPaths.pathTo(source);
+
+        assertThat(pathTo)
+                .contains(emptyList());
     }
 
     @ParameterizedTest
@@ -72,15 +82,11 @@ abstract class SearchPathsTest {
 
     private void assertPath(List<Integer> path, int destination) {
         assertThat(path)
-                .first()
-                .isEqualTo(source);
-
-        assertThat(path)
                 .last()
                 .isEqualTo(destination);
 
         int prev = source;
-        for (int current : path.drop(1)) {
+        for (int current : path) {
             assertThat(graph.adjacentVertices(prev))
                     .contains(current);
             prev = current;
