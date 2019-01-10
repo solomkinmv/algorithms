@@ -34,7 +34,7 @@ public class GraphDiameter {
                                                          .orElseThrow();
     }
 
-    private Integer findFirstVertex() {
+    private int findFirstVertex() {
         return graph.getVertices().iterator().next();
     }
 }
