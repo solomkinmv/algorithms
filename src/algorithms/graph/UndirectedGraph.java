@@ -11,6 +11,9 @@ import static java.util.Collections.emptySet;
 public class UndirectedGraph implements Graph {
     private final Map<Integer, Set<Integer>> adjacencyList = new HashMap<>();
 
+    public UndirectedGraph() {
+    }
+
     public UndirectedGraph(Graph graph) {
         for (int v1 : graph.getVertices()) {
             for (int v2 : graph.adjacentVertices(v1)) {
@@ -26,9 +29,8 @@ public class UndirectedGraph implements Graph {
     }
 
     @Override
-    public void removeEdge(int v, int w) {
-        removeDirectedEdge(v, w);
-        removeDirectedEdge(w, v);
+    public boolean removeEdge(int v, int w) {
+        return removeDirectedEdge(v, w) && removeDirectedEdge(w, v);
     }
 
     @Override
@@ -48,10 +50,10 @@ public class UndirectedGraph implements Graph {
 
     @Override
     public int getNumberOfEdges() {
-        return adjacencyList.values().stream()
-                            .flatMap(Set::stream)
-                            .mapToInt(v -> v)
-                            .sum() / 2;
+        return (int) (adjacencyList.values().stream()
+                                   .flatMap(Set::stream)
+                                   .mapToInt(v -> v)
+                                   .count() / 2);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class UndirectedGraph implements Graph {
 
         for (int vertex : getVertices()) {
             for (int adjacentVertex : adjacentVertices(vertex)) {
-                result.append(adjacentVertex)
+                result.append(vertex)
                       .append(" -> ")
                       .append(adjacentVertex)
                       .append(System.lineSeparator());
@@ -77,13 +79,12 @@ public class UndirectedGraph implements Graph {
         return result.toString();
     }
 
-    private void removeDirectedEdge(int v, int w) {
-        if (!adjacentVertices(v).removeIf(adj -> adj == w)) {
-            throw new IllegalArgumentException(String.format("Couldn't delete edge %d -> %d: %s", v, w, adjacencyList));
-        }
+    private boolean removeDirectedEdge(int v, int w) {
+        boolean deleted = adjacentVertices(v).removeIf(adj -> adj == w);
         if (adjacentVertices(v).size() == 0) {
             adjacencyList.remove(v);
         }
+        return deleted;
     }
 
     private void addDirectedEdge(int v, int w) {
