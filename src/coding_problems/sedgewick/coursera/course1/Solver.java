@@ -1,4 +1,4 @@
-package coding_problems.sedgewick.coursera;
+package coding_problems.sedgewick.coursera.course1;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.MinPQ;

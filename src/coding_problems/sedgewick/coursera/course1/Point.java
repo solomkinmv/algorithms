@@ -1,4 +1,4 @@
-package coding_problems.sedgewick.coursera; /******************************************************************************
+package coding_problems.sedgewick.coursera.course1; /******************************************************************************
  *  Compilation:  javac Point.java
  *  Execution:    java Point
  *  Dependencies: none

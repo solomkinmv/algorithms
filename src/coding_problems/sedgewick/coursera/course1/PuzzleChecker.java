@@ -1,4 +1,4 @@
-package coding_problems.sedgewick.coursera; /******************************************************************************
+package coding_problems.sedgewick.coursera.course1; /******************************************************************************
  *  Compilation:  javac PuzzleChecker.java
  *  Execution:    java PuzzleChecker filename1.txt filename2.txt ...
  *  Dependencies: Board.java Solver.java

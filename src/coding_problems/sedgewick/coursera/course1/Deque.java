@@ -1,4 +1,4 @@
-package coding_problems.sedgewick.coursera;
+package coding_problems.sedgewick.coursera.course1;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

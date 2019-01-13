@@ -1,4 +1,4 @@
-package coding_problems.sedgewick.coursera; /******************************************************************************
+package coding_problems.sedgewick.coursera.course1; /******************************************************************************
  *  Compilation:  javac InteractivePercolationVisualizer.java
  *  Execution:    java InteractivePercolationVisualizer n
  *  Dependencies: PercolationVisualizer.java Percolation.java

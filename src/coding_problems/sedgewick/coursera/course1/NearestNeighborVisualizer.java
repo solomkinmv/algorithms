@@ -1,4 +1,4 @@
-package coding_problems.sedgewick.coursera; /******************************************************************************
+package coding_problems.sedgewick.coursera.course1; /******************************************************************************
  *  Compilation:  javac NearestNeighborVisualizer.java
  *  Execution:    java NearestNeighborVisualizer input.txt
  *  Dependencies: PointSET.java KdTree.java

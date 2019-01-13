@@ -1,4 +1,4 @@
-package coding_problems.sedgewick.coursera;
+package coding_problems.sedgewick.coursera.course1;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
@@ -7,14 +7,13 @@ import edu.princeton.cs.algs4.StdOut;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.List;
 
-public class FastCollinearPoints {
-
+public class BruteCollinearPoints {
     private final Point[] points;
     private LineSegment[] segments;
 
-    public FastCollinearPoints(Point[] points) {
+    public BruteCollinearPoints(Point[] points) {
         if (points == null) throw new IllegalArgumentException();
         validate(points);
 
@@ -44,7 +43,7 @@ public class FastCollinearPoints {
         StdDraw.show();
 
         // print and draw the line segments
-        FastCollinearPoints collinear = new FastCollinearPoints(points);
+        BruteCollinearPoints collinear = new BruteCollinearPoints(points);
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
             segment.draw();
@@ -72,27 +71,20 @@ public class FastCollinearPoints {
 
     private void calculateSegments() {
         ArrayList<LineSegment> segments = new ArrayList<>();
-        for (int i = 0; i < points.length; i++) {
-            Point p0 = points[i];
-            Comparator<Point> pointComparator = p0.slopeOrder();
-            Arrays.sort(points, i + 1, points.length, pointComparator);
-
-
-            for (int j = i + 1; j < points.length - 1; j++) {
-                double slope = p0.slopeTo(points[j]);
-                int k = j + 1;
-                while (k < points.length && p0.slopeTo(points[k]) == slope) {
-                    k++;
-                }
-                ArrayList<Point> linePoints = new ArrayList<>();
-                while (j < k) {
-                    linePoints.add(points[j++]);
-                }
-                j = k - 1;
-                if (linePoints.size() > 2) {
-                    linePoints.add(p0);
-                    Collections.sort(linePoints);
-                    segments.add(new LineSegment(linePoints.get(0), linePoints.get(linePoints.size() - 1)));
+        for (int i = 0; i < points.length - 3; i++) {
+            for (int j = i + 1; j < points.length - 2; j++) {
+                for (int k = j + 1; k < points.length - 1; k++) {
+                    for (int m = k + 1; m < points.length; m++) {
+                        Point a = points[i];
+                        Point b = points[j];
+                        Point c = points[k];
+                        Point d = points[m];
+                        if (a.slopeTo(b) == a.slopeTo(c) && a.slopeTo(b) == a.slopeTo(d)) {
+                            List<Point> list = Arrays.asList(a, b, c, d);
+                            Collections.sort(list);
+                            segments.add(new LineSegment(list.get(0), list.get(list.size() - 1)));
+                        }
+                    }
                 }
             }
         }
