@@ -4,24 +4,22 @@ import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class WordNet {
 
-    private final Map<Integer, Set<Integer>> adjacencyList = new HashMap<>();
+    //    private final Map<Integer, Set<Integer>> adjacencyList = new HashMap<>();
     private final Map<Integer, String> idSynset = new HashMap<>();
-    private final Map<String, Integer> synsetId = new HashMap<>();
-//    private final Digraph digraph;
+    private final Map<String, Integer> wordToSynsetId = new HashMap<>();
+    private final Digraph graph;
 
     // constructor takes the name of the two input files
     public WordNet(String synsets, String hypernyms) {
         validateNull(synsets);
         validateNull(hypernyms);
 
-        initSynsets(synsets);
-        initHypernyms(hypernyms);
+        int maxId = initSynsets(synsets);
+        graph = initHypernyms(maxId, hypernyms);
     }
 
     // do unit testing of this class
@@ -30,13 +28,13 @@ public class WordNet {
 
     // returns all WordNet nouns
     public Iterable<String> nouns() {
-        return synsetId.keySet();
+        return wordToSynsetId.keySet();
     }
 
     // is the word a WordNet noun?
     public boolean isNoun(String word) {
         validateNull(word);
-        return synsetId.containsKey(word);
+        return wordToSynsetId.containsKey(word);
     }
 
     // distance between nounA and nounB (defined below)
@@ -47,7 +45,10 @@ public class WordNet {
         validateNoun(nounA);
         validateNoun(nounB);
 
-        return -1;
+        SAP sap = new SAP(graph);
+        int nounAId = wordToSynsetId.get(nounA);
+        int nounBId = wordToSynsetId.get(nounB);
+        return sap.length(nounAId, nounBId);
     }
 
     // a synset (second field of synsets.txt) that is the ancestor ancestor of nounA and nounB
@@ -59,40 +60,52 @@ public class WordNet {
         validateNoun(nounA);
         validateNoun(nounB);
 
-        return null;
+        SAP sap = new SAP(graph);
+        int nounAId = wordToSynsetId.get(nounA);
+        int nounBId = wordToSynsetId.get(nounB);
+        int ancestorId = sap.ancestor(nounAId, nounBId);
+        return idSynset.get(ancestorId);
     }
 
-    private void initHypernyms(String hypernyms) {
+    private Digraph initHypernyms(int maxId, String hypernyms) {
+        Digraph digraph = new Digraph(maxId + 1);
+
         for (String line : lines(hypernyms)) {
             String[] split = line.split(",");
             Integer hyponim = Integer.valueOf(split[0]);
             for (int i = 1; i < split.length; i++) {
-                addEdge(hyponim, Integer.valueOf(split[i]));
+                digraph.addEdge(hyponim, Integer.valueOf(split[i]));
             }
         }
+
+        return digraph;
     }
 
-    private void addEdge(Integer from, Integer to) {
-        adjacencyList.computeIfAbsent(from, key -> new HashSet<>())
-                     .add(to);
-    }
-
-    private void initSynsets(String synsets) {
+    private int initSynsets(String synsets) {
+        int maxId = 0;
         for (String line : lines(synsets)) {
             String[] split = line.split(",");
             Integer id = Integer.valueOf(split[0]);
-            String noun = split[1];
-            synsetId.put(noun, id);
-            idSynset.put(id, noun);
+            String synset = split[1];
+            String[] nouns = synset.split(" ");
+            for (String noun : nouns) {
+                wordToSynsetId.put(noun, id);
+            }
+            idSynset.put(id, synset);
+            maxId = Math.max(id, maxId);
         }
+
+        return maxId;
     }
 
     private void validateNoun(String word) {
-        if (!isNoun(word)) throw new IllegalArgumentException();
+        if (!isNoun(word)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     private void validateNull(Object object) {
-        if (object == null) throw new IllegalArgumentException();
+        if (object == null) throw new IllegalArgumentException(object + " is null");
     }
 
     private String[] lines(String filename) {
