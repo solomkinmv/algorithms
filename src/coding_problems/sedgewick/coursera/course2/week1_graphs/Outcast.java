@@ -12,13 +12,16 @@ public class Outcast {
     }
 
     public static void main(String[] args) {  // see test client below
-        WordNet wordnet = new WordNet(args[0], args[1]);
+        String synsetPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/synsets.txt";
+        String hypernymsPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/hypernyms.txt";
+        WordNet wordnet = new WordNet(synsetPath, hypernymsPath);
         Outcast outcast = new Outcast(wordnet);
-        for (int t = 2; t < args.length; t++) {
-            In in = new In(args[t]);
-            String[] nouns = in.readAllStrings();
-            StdOut.println(args[t] + ": " + outcast.outcast(nouns));
-        }
+
+        String outcastPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/outcast8.txt";
+
+        In in = new In(outcastPath);
+        String[] nouns = in.readAllStrings();
+        StdOut.println(outcastPath + ": " + outcast.outcast(nouns));
     }
 
     public String outcast(String[] nouns) {   // given an array of WordNet nouns, return an outcast
@@ -26,6 +29,7 @@ public class Outcast {
         int maxDist = 0;
         for (String noun : nouns) {
             int dist = sumDistances(noun, nouns);
+//            System.out.println(noun + "\t" + dist);
             if (dist > maxDist) {
                 outcast = noun;
                 maxDist = dist;

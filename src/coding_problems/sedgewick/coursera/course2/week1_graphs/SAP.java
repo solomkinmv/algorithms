@@ -39,27 +39,26 @@ public class SAP {
 //            StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
 //        }
         System.out.println(sap.ancestor(Arrays.asList(13, 23, 24), Arrays.asList(6, 16, 17)));
-//        System.out.println(sap.ancestor(13, 16));
     }
 
     // length of shortest ancestral path between v and w; -1 if no such path
     public int length(int v, int w) {
-        return shortestPathWithPrint(v, w).length();
+        return shortestPath(v, w).length();
     }
 
     // a ancestor ancestor of v and w that participates in a shortest ancestral path; -1 if no such path
     public int ancestor(int v, int w) {
-        return shortestPathWithPrint(v, w).ancestor;
+        return shortestPath(v, w).ancestor;
     }
 
     // length of shortest ancestral path between any vertex in v and any vertex in w; -1 if no such path
     public int length(Iterable<Integer> v, Iterable<Integer> w) {
-        return shortestPathWithPrint(v, w).length();
+        return shortestPath(v, w).length();
     }
 
     // a ancestor ancestor that participates in shortest ancestral path; -1 if no such path
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
-        return shortestPathWithPrint(v, w).ancestor;
+        return shortestPath(v, w).ancestor;
     }
 
     private ShortestPath shortestPathWithPrint(int v, int w) {
