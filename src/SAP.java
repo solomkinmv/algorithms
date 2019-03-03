@@ -1,11 +1,6 @@
-package coding_problems.sedgewick.coursera.course2.week1_graphs;
-
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,7 +22,7 @@ public class SAP {
 
     // do unit testing of this class
     public static void main(String[] args) {
-        String digraphPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/digraph25.txt";
+        String digraphPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/digraph3.txt";
         In in = new In(digraphPath);
         Digraph G = new Digraph(in);
         SAP sap = new SAP(G);
@@ -38,7 +33,9 @@ public class SAP {
 //            int ancestor = sap.ancestor(v, w);
 //            StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
 //        }
-        System.out.println(sap.ancestor(Arrays.asList(13, 23, 24), Arrays.asList(6, 16, 17)));
+//        System.out.println(sap.ancestor(Arrays.asList(13, 23, 24), Arrays.asList(6, 16, 17)));
+        System.out.println(sap.ancestor(10, 11));
+        System.out.println(sap.length(10, 11));
     }
 
     // length of shortest ancestral path between v and w; -1 if no such path
@@ -59,18 +56,6 @@ public class SAP {
     // a ancestor ancestor that participates in shortest ancestral path; -1 if no such path
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
         return shortestPath(v, w).ancestor;
-    }
-
-    private ShortestPath shortestPathWithPrint(int v, int w) {
-        ShortestPath result = shortestPath(v, w);
-        System.out.println(result);
-        return result;
-    }
-
-    private ShortestPath shortestPathWithPrint(Iterable<Integer> v, Iterable<Integer> w) {
-        ShortestPath result = shortestPath(v, w);
-        System.out.println(result);
-        return result;
     }
 
     private ShortestPath shortestPath(Iterable<Integer> vIterable, Iterable<Integer> wIterable) {
@@ -106,7 +91,9 @@ public class SAP {
 
         // use 2 simultaneous BFS {
         Set<Integer> investigated1 = new HashSet<>();
+        investigated1.add(v);
         Set<Integer> investigated2 = new HashSet<>();
+        investigated2.add(w);
 
         Map<Integer, Integer> previous1 = new HashMap<>();
         previous1.put(v, v);
@@ -164,7 +151,7 @@ public class SAP {
         return result;
     }
 
-    static class ShortestPath {
+    private static class ShortestPath {
         final int ancestor;
         final List<Integer> path;
 

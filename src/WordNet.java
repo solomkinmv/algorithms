@@ -1,5 +1,3 @@
-package coding_problems.sedgewick.coursera.course2.week1_graphs;
-
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
 
@@ -22,10 +20,6 @@ public class WordNet {
         graph = initHypernyms(maxId, hypernyms);
     }
 
-    // do unit testing of this class
-    public static void main(String[] args) {
-    }
-
     // returns all WordNet nouns
     public Iterable<String> nouns() {
         return wordToSynsetId.keySet();
@@ -44,6 +38,8 @@ public class WordNet {
 
         validateNoun(nounA);
         validateNoun(nounB);
+
+        if (nounA.equals(nounB)) return 0;
 
         SAP sap = new SAP(graph);
         int nounAId = wordToSynsetId.get(nounA);
@@ -74,7 +70,7 @@ public class WordNet {
             String[] split = line.split(",");
             Integer hyponim = Integer.valueOf(split[0]);
             for (int i = 1; i < split.length; i++) {
-                digraph.addEdge(hyponim, Integer.valueOf(split[i]));
+                digraph.addEdge(hyponim, Integer.parseInt(split[i]));
             }
         }
 
