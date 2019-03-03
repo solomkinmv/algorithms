@@ -1,5 +1,6 @@
-package coding_problems.sedgewick.coursera.course2;
+package coding_problems.sedgewick.coursera.course2.week1_graphs;
 
+import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
 
 import java.util.HashMap;
@@ -12,9 +13,13 @@ public class WordNet {
     private final Map<Integer, Set<Integer>> adjacencyList = new HashMap<>();
     private final Map<Integer, String> idSynset = new HashMap<>();
     private final Map<String, Integer> synsetId = new HashMap<>();
+//    private final Digraph digraph;
 
     // constructor takes the name of the two input files
     public WordNet(String synsets, String hypernyms) {
+        validateNull(synsets);
+        validateNull(hypernyms);
+
         initSynsets(synsets);
         initHypernyms(hypernyms);
     }
@@ -30,16 +35,31 @@ public class WordNet {
 
     // is the word a WordNet noun?
     public boolean isNoun(String word) {
+        validateNull(word);
         return synsetId.containsKey(word);
     }
 
     // distance between nounA and nounB (defined below)
     public int distance(String nounA, String nounB) {
+        validateNull(nounA);
+        validateNull(nounB);
+
+        validateNoun(nounA);
+        validateNoun(nounB);
+
+        return -1;
     }
 
-    // a synset (second field of synsets.txt) that is the common ancestor of nounA and nounB
+    // a synset (second field of synsets.txt) that is the ancestor ancestor of nounA and nounB
     // in a shortest ancestral path (defined below)
     public String sap(String nounA, String nounB) {
+        validateNull(nounA);
+        validateNull(nounB);
+
+        validateNoun(nounA);
+        validateNoun(nounB);
+
+        return null;
     }
 
     private void initHypernyms(String hypernyms) {
@@ -65,6 +85,10 @@ public class WordNet {
             synsetId.put(noun, id);
             idSynset.put(id, noun);
         }
+    }
+
+    private void validateNoun(String word) {
+        if (!isNoun(word)) throw new IllegalArgumentException();
     }
 
     private void validateNull(Object object) {
