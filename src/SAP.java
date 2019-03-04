@@ -113,13 +113,18 @@ public class SAP {
         Queue<Integer> queue2 = new LinkedList<>();
         queue2.offer(w);
 
+        ShortestPath shortestPath = ShortestPath.empty();
         while (!queue1.isEmpty() || !queue2.isEmpty()) {
             ShortestPath w1 = checkNeighbourElementsFromQueue(investigated1, investigated2, previous1, previous2, queue1);
-            if (w1 != null) return w1;
+            if (w1 != null && w1.length() < shortestPath.length()) {
+                shortestPath = w1;
+            }
             ShortestPath w2 = checkNeighbourElementsFromQueue(investigated2, investigated1, previous2, previous1, queue2);
-            if (w2 != null) return w2;
+            if (w2 != null && w2.length() < shortestPath.length()) {
+                shortestPath = w2;
+            }
         }
-        return ShortestPath.empty();
+        return shortestPath;
     }
 
     private ShortestPath checkNeighbourElementsFromQueue(Set<Integer> investigated1,
@@ -168,11 +173,11 @@ public class SAP {
         }
 
         static ShortestPath empty() {
-            return new ShortestPath(-1, Collections.emptyList());
+            return new ShortestPath(-1, null);
         }
 
         int length() {
-            return path.size() - 1;
+            return path == null ? Integer.MAX_VALUE : path.size() - 1;
         }
 
         @Override
