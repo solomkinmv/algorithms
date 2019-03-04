@@ -22,7 +22,7 @@ public class SAP {
 
     // do unit testing of this class
     public static void main(String[] args) {
-        String digraphPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/digraph3.txt";
+        String digraphPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/digraph4.txt";
         In in = new In(digraphPath);
         Digraph G = new Digraph(in);
         SAP sap = new SAP(G);
@@ -34,13 +34,16 @@ public class SAP {
 //            StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
 //        }
 //        System.out.println(sap.ancestor(Arrays.asList(13, 23, 24), Arrays.asList(6, 16, 17)));
-        System.out.println(sap.ancestor(10, 11));
-        System.out.println(sap.length(10, 11));
+        System.out.println(G);
+        System.out.println(sap.length(4, 1));
+//        System.out.println(sap.length(3, 3));
     }
 
     // length of shortest ancestral path between v and w; -1 if no such path
     public int length(int v, int w) {
-        return shortestPath(v, w).length();
+        ShortestPath shortestPath = shortestPath(v, w);
+//        System.out.println(shortestPath);
+        return shortestPath.length();
     }
 
     // a ancestor ancestor of v and w that participates in a shortest ancestral path; -1 if no such path
@@ -88,6 +91,10 @@ public class SAP {
 
     private ShortestPath shortestPath(int v, int w) {
 //        System.out.println(v + "\t" + w);
+
+        if (v == w) {
+            return new ShortestPath(v, Collections.singletonList(v));
+        }
 
         // use 2 simultaneous BFS {
         Set<Integer> investigated1 = new HashSet<>();

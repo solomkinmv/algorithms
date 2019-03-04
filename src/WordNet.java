@@ -70,11 +70,16 @@ public class WordNet {
             String[] split = line.split(",");
             Integer hyponim = Integer.valueOf(split[0]);
             for (int i = 1; i < split.length; i++) {
-                digraph.addEdge(hyponim, Integer.parseInt(split[i]));
+                addEdge(digraph, hyponim, Integer.parseInt(split[i]));
             }
         }
 
         return digraph;
+    }
+
+    private void addEdge(Digraph graph, int hyponim, int hypernym) {
+//        System.out.println(hypernym + " -> " + hypernym);
+        graph.addEdge(hyponim, hypernym);
     }
 
     private int initSynsets(String synsets) {
