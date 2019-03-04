@@ -22,7 +22,7 @@ public class SAP {
 
     // do unit testing of this class
     public static void main(String[] args) {
-        String digraphPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/digraph1.txt";
+        String digraphPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/digraph_tournament.txt";
         In in = new In(digraphPath);
         Digraph G = new Digraph(in);
         SAP sap = new SAP(G);
@@ -35,7 +35,7 @@ public class SAP {
 //        }
 //        System.out.println(sap.ancestor(Arrays.asList(13, 23, 24), Arrays.asList(6, 16, 17)));
         System.out.println(G);
-        System.out.println(sap.length(0, 3));
+        System.out.println(sap.length(1, 3));
 //        System.out.println(sap.length(3, 3));
     }
 
@@ -81,6 +81,10 @@ public class SAP {
         if (nullablePath1 == null) {
             return path2;
         }
+        if (nullablePath1.length() == -1) {
+            return path2;
+        }
+
         if (nullablePath1.length() > path2.length()) {
 //            System.out.println("Path1: " + nullablePath1 + ", Path2: " + path2 + ". Shortest: " + path2);
             return path2;
@@ -138,6 +142,7 @@ public class SAP {
 
         int v1 = queue.poll();
         Iterable<Integer> adj1 = graph.adj(v1);
+        ShortestPath shortestPath = null;
         for (int w1 : adj1) {
             if (!investigated1.contains(w1)) {
                 investigated1.add(w1);
@@ -145,10 +150,10 @@ public class SAP {
                 queue.offer(w1);
             }
             if (investigated2.contains(w1)) {
-                return new ShortestPath(w1, buildPath(previous1, previous2, w1));
+                shortestPath = shortestPath(shortestPath, new ShortestPath(w1, buildPath(previous1, previous2, w1)));
             }
         }
-        return null;
+        return shortestPath;
     }
 
     private List<Integer> buildPath(Map<Integer, Integer> previous1, Map<Integer, Integer> previous2, int ancestor) {
@@ -162,6 +167,7 @@ public class SAP {
         while (val != (val = previous2.get(val))) {
             result.addLast(val);
         }
+//        System.out.println(result);
         return result;
     }
 
@@ -172,15 +178,6 @@ public class SAP {
         ShortestPath(int ancestor, List<Integer> path) {
             this.ancestor = ancestor;
             this.path = path;
-        }
-
-        static ShortestPath longest() {
-            return new ShortestPath(-1, null) {
-                @Override
-                int length() {
-                    return Integer.MAX_VALUE;
-                }
-            };
         }
 
         static ShortestPath empty() {
