@@ -22,7 +22,7 @@ public class SAP {
 
     // do unit testing of this class
     public static void main(String[] args) {
-        String digraphPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/digraph4.txt";
+        String digraphPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/digraph1.txt";
         In in = new In(digraphPath);
         Digraph G = new Digraph(in);
         SAP sap = new SAP(G);
@@ -35,7 +35,7 @@ public class SAP {
 //        }
 //        System.out.println(sap.ancestor(Arrays.asList(13, 23, 24), Arrays.asList(6, 16, 17)));
         System.out.println(G);
-        System.out.println(sap.length(4, 1));
+        System.out.println(sap.length(2, 6));
 //        System.out.println(sap.length(3, 3));
     }
 
@@ -116,11 +116,11 @@ public class SAP {
         ShortestPath shortestPath = ShortestPath.empty();
         while (!queue1.isEmpty() || !queue2.isEmpty()) {
             ShortestPath w1 = checkNeighbourElementsFromQueue(investigated1, investigated2, previous1, previous2, queue1);
-            if (w1 != null && w1.length() < shortestPath.length()) {
+            if (w1 != null && (w1.length() < shortestPath.length() || shortestPath.length() == -1)) {
                 shortestPath = w1;
             }
             ShortestPath w2 = checkNeighbourElementsFromQueue(investigated2, investigated1, previous2, previous1, queue2);
-            if (w2 != null && w2.length() < shortestPath.length()) {
+            if (w2 != null && (w2.length() < shortestPath.length() || shortestPath.length() == -1)) {
                 shortestPath = w2;
             }
         }
@@ -132,18 +132,20 @@ public class SAP {
                                                          Map<Integer, Integer> previous1,
                                                          Map<Integer, Integer> previous2,
                                                          Queue<Integer> queue) {
-        if (!queue.isEmpty()) {
-            int v1 = queue.poll();
-            Iterable<Integer> adj1 = graph.adj(v1);
-            for (int w1 : adj1) {
-                if (!investigated1.contains(w1)) {
-                    investigated1.add(w1);
-                    previous1.put(w1, v1);
-                    queue.offer(w1);
-                }
-                if (investigated2.contains(w1)) {
-                    return new ShortestPath(w1, buildPath(previous1, previous2, w1));
-                }
+        if (queue.isEmpty()) {
+            return null;
+        }
+
+        int v1 = queue.poll();
+        Iterable<Integer> adj1 = graph.adj(v1);
+        for (int w1 : adj1) {
+            if (!investigated1.contains(w1)) {
+                investigated1.add(w1);
+                previous1.put(w1, v1);
+                queue.offer(w1);
+            }
+            if (investigated2.contains(w1)) {
+                return new ShortestPath(w1, buildPath(previous1, previous2, w1));
             }
         }
         return null;
@@ -172,12 +174,21 @@ public class SAP {
             this.path = path;
         }
 
+        static ShortestPath longest() {
+            return new ShortestPath(-1, null) {
+                @Override
+                int length() {
+                    return Integer.MAX_VALUE;
+                }
+            };
+        }
+
         static ShortestPath empty() {
             return new ShortestPath(-1, null);
         }
 
         int length() {
-            return path == null ? Integer.MAX_VALUE : path.size() - 1;
+            return path == null ? -1 : path.size() - 1;
         }
 
         @Override
