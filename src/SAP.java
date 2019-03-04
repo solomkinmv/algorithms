@@ -17,7 +17,7 @@ public class SAP {
 
     // constructor takes a digraph (not necessarily a DAG)
     public SAP(Digraph G) {
-        graph = G;
+        graph = new Digraph(G);
     }
 
     // do unit testing of this class
@@ -35,7 +35,7 @@ public class SAP {
 //        }
 //        System.out.println(sap.ancestor(Arrays.asList(13, 23, 24), Arrays.asList(6, 16, 17)));
         System.out.println(G);
-        System.out.println(sap.length(2, 6));
+        System.out.println(sap.length(0, 3));
 //        System.out.println(sap.length(3, 3));
     }
 

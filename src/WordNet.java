@@ -11,6 +11,13 @@ public class WordNet {
     private final Map<String, Integer> wordToSynsetId = new HashMap<>();
     private final Digraph graph;
 
+    public static void main(String[] args) {
+        String synsetPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/synsets.txt";
+        String hypernymsPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/hypernyms.txt";
+        WordNet wordnet = new WordNet(synsetPath, hypernymsPath);
+
+    }
+
     // constructor takes the name of the two input files
     public WordNet(String synsets, String hypernyms) {
         validateNull(synsets);
