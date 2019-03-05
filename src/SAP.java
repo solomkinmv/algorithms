@@ -62,16 +62,19 @@ public class SAP {
     }
 
     private ShortestPath shortestPath(Iterable<Integer> vIterable, Iterable<Integer> wIterable) {
-        ShortestPath result = null;
-        for (int v : vIterable) {
+        validateNull(vIterable);
+        validateNull(wIterable);
+
+        ShortestPath result = ShortestPath.empty();
+        for (Integer v : vIterable) {
             result = shortestPath(result, shortestPath(v, wIterable));
         }
         return result;
     }
 
-    private ShortestPath shortestPath(int v, Iterable<Integer> wIterable) {
-        ShortestPath result = null;
-        for (int w : wIterable) {
+    private ShortestPath shortestPath(Integer v, Iterable<Integer> wIterable) {
+        ShortestPath result = ShortestPath.empty();
+        for (Integer w : wIterable) {
             result = shortestPath(result, shortestPath(v, w));
         }
         return result;
@@ -93,7 +96,9 @@ public class SAP {
         return nullablePath1;
     }
 
-    private ShortestPath shortestPath(int v, int w) {
+    private ShortestPath shortestPath(Integer v, Integer w) {
+        validateNull(v);
+        validateNull(w);
 //        System.out.println(v + "\t" + w);
 
         if (v == w) {
@@ -192,5 +197,9 @@ public class SAP {
         public String toString() {
             return "Ancestor: " + ancestor + ". Path: " + path;
         }
+    }
+
+    private void validateNull(Object object) {
+        if (object == null) throw new IllegalArgumentException(object + " is null");
     }
 }
