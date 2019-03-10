@@ -2,21 +2,16 @@ import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class WordNet {
 
     //    private final Map<Integer, Set<Integer>> adjacencyList = new HashMap<>();
     private final Map<Integer, String> idSynset = new HashMap<>();
-    private final Map<String, Integer> wordToSynsetId = new HashMap<>();
+    private final Map<String, Set<Integer>> wordToSynsetIds = new HashMap<>();
     private final Digraph graph;
-
-    public static void main(String[] args) {
-        String synsetPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/synsets.txt";
-        String hypernymsPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/hypernyms.txt";
-        WordNet wordnet = new WordNet(synsetPath, hypernymsPath);
-
-    }
 
     // constructor takes the name of the two input files
     public WordNet(String synsets, String hypernyms) {
@@ -27,15 +22,24 @@ public class WordNet {
         graph = initHypernyms(maxId, hypernyms);
     }
 
+    public static void main(String[] args) {
+        String synsetPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/synsets100-subgraph.txt";
+        String hypernymsPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/hypernyms100-subgraph.txt";
+        WordNet wordnet = new WordNet(synsetPath, hypernymsPath);
+
+        int distance = wordnet.distance("pacifier", "thing");
+        System.out.println(distance);
+    }
+
     // returns all WordNet nouns
     public Iterable<String> nouns() {
-        return wordToSynsetId.keySet();
+        return wordToSynsetIds.keySet();
     }
 
     // is the word a WordNet noun?
     public boolean isNoun(String word) {
         validateNull(word);
-        return wordToSynsetId.containsKey(word);
+        return wordToSynsetIds.containsKey(word);
     }
 
     // distance between nounA and nounB (defined below)
@@ -49,9 +53,13 @@ public class WordNet {
         if (nounA.equals(nounB)) return 0;
 
         SAP sap = new SAP(graph);
-        int nounAId = wordToSynsetId.get(nounA);
-        int nounBId = wordToSynsetId.get(nounB);
-        return sap.length(nounAId, nounBId);
+        Set<Integer> nounAIds = wordToSynsetIds.get(nounA);
+        Set<Integer> nounBIds = wordToSynsetIds.get(nounB);
+
+//        System.out.println(graph);
+//        System.out.println(nounAIds);
+//        System.out.println(nounBIds);
+        return sap.length(nounAIds, nounBIds);
     }
 
     // a synset (second field of synsets.txt) that is the ancestor ancestor of nounA and nounB
@@ -64,9 +72,9 @@ public class WordNet {
         validateNoun(nounB);
 
         SAP sap = new SAP(graph);
-        int nounAId = wordToSynsetId.get(nounA);
-        int nounBId = wordToSynsetId.get(nounB);
-        int ancestorId = sap.ancestor(nounAId, nounBId);
+        Set<Integer> nounAIds = wordToSynsetIds.get(nounA);
+        Set<Integer> nounBIds = wordToSynsetIds.get(nounB);
+        int ancestorId = sap.ancestor(nounAIds, nounBIds);
         return idSynset.get(ancestorId);
     }
 
@@ -97,7 +105,8 @@ public class WordNet {
             String synset = split[1];
             String[] nouns = synset.split(" ");
             for (String noun : nouns) {
-                wordToSynsetId.put(noun, id);
+                wordToSynsetIds.computeIfAbsent(noun, key -> new HashSet<>())
+                               .add(id);
             }
             idSynset.put(id, synset);
             maxId = Math.max(id, maxId);
