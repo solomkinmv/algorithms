@@ -151,7 +151,7 @@ public class SAP {
         Iterable<Integer> adj1 = graph.adj(v1);
         ShortestPath shortestPath = null;
         for (int w1 : adj1) {
-            if (!investigated1.contains(w1)) {
+            if (!investigated1.contains(w1) && !investigated2.contains(w1)) {
                 investigated1.add(w1);
                 previous1.put(w1, v1);
                 queue.offer(w1);
