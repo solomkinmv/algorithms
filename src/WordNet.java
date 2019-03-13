@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.DirectedCycle;
 import edu.princeton.cs.algs4.In;
 
 import java.util.HashMap;
@@ -20,11 +21,13 @@ public class WordNet {
 
         int maxId = initSynsets(synsets);
         graph = initHypernyms(maxId, hypernyms);
+        if (new DirectedCycle(graph).hasCycle()) throw new IllegalArgumentException();
+        validateSingleRoot();
     }
 
     public static void main(String[] args) {
         String synsetPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/synsets100-subgraph.txt";
-        String hypernymsPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/hypernyms100-subgraph.txt";
+        String hypernymsPath = "resources/coding_problems/sedgewick/coursera/course2/week1_graphs/hypernyms6InvalidTwoRoots.txt";
         WordNet wordnet = new WordNet(synsetPath, hypernymsPath);
 
         int distance = wordnet.distance("pacifier", "thing");
@@ -76,6 +79,16 @@ public class WordNet {
         Set<Integer> nounBIds = wordToSynsetIds.get(nounB);
         int ancestorId = sap.ancestor(nounAIds, nounBIds);
         return idSynset.get(ancestorId);
+    }
+
+    private void validateSingleRoot() {
+        int countRoots = 0;
+        for (int i = 0; i < graph.V(); i++) {
+            if (graph.indegree(i) == 0) {
+                countRoots++;
+                if (countRoots > 1) throw new IllegalArgumentException();
+            }
+        }
     }
 
     private Digraph initHypernyms(int maxId, String hypernyms) {
