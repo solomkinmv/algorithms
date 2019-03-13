@@ -84,7 +84,7 @@ public class WordNet {
     private void validateSingleRoot() {
         int countRoots = 0;
         for (int key : idSynset.keySet()) {
-            if (graph.indegree(key) == 0) {
+            if (graph.outdegree(key) == 0) {
                 countRoots++;
                 if (countRoots > 1) throw new IllegalArgumentException();
             }
