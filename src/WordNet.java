@@ -83,8 +83,8 @@ public class WordNet {
 
     private void validateSingleRoot() {
         int countRoots = 0;
-        for (int i = 0; i < graph.V(); i++) {
-            if (graph.indegree(i) == 0) {
+        for (int key : idSynset.keySet()) {
+            if (graph.indegree(key) == 0) {
                 countRoots++;
                 if (countRoots > 1) throw new IllegalArgumentException();
             }
