@@ -1,3 +1,5 @@
+package coding_problems.sedgewick.coursera.course2.week1_graphs;
+
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.DirectedCycle;
 import edu.princeton.cs.algs4.In;
