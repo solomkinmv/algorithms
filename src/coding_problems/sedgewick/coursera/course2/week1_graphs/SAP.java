@@ -1,7 +1,8 @@
+package coding_problems.sedgewick.coursera.course2.week1_graphs;
+
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
