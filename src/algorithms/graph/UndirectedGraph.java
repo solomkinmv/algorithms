@@ -1,5 +1,7 @@
 package algorithms.graph;
 
+import lombok.Getter;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,7 +11,9 @@ import java.util.Set;
 import static java.util.Collections.emptySet;
 
 public class UndirectedGraph implements Graph {
-    private final Map<Integer, Set<Integer>> adjacencyList = new HashMap<>();
+    protected final Map<Integer, Set<Integer>> adjacencyList = new HashMap<>();
+    @Getter
+    protected int numberOfEdges = 0;
 
     public UndirectedGraph() {
     }
@@ -26,11 +30,17 @@ public class UndirectedGraph implements Graph {
     public void addEdge(int v, int w) {
         addDirectedEdge(v, w);
         addDirectedEdge(w, v);
+        numberOfEdges++;
     }
 
     @Override
     public boolean removeEdge(int v, int w) {
-        return removeDirectedEdge(v, w) && removeDirectedEdge(w, v);
+        if (removeDirectedEdge(v, w) && removeDirectedEdge(w, v)) {
+            numberOfEdges--;
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -46,14 +56,6 @@ public class UndirectedGraph implements Graph {
     @Override
     public int getNumberOfVertices() {
         return adjacencyList.size();
-    }
-
-    @Override
-    public int getNumberOfEdges() {
-        return (int) (adjacencyList.values().stream()
-                                   .flatMap(Set::stream)
-                                   .mapToInt(v -> v)
-                                   .count() / 2);
     }
 
     @Override
@@ -79,7 +81,7 @@ public class UndirectedGraph implements Graph {
         return result.toString();
     }
 
-    private boolean removeDirectedEdge(int v, int w) {
+    protected boolean removeDirectedEdge(int v, int w) {
         boolean deleted = adjacentVertices(v).removeIf(adj -> adj == w);
         if (adjacentVertices(v).size() == 0) {
             adjacencyList.remove(v);
@@ -87,7 +89,7 @@ public class UndirectedGraph implements Graph {
         return deleted;
     }
 
-    private void addDirectedEdge(int v, int w) {
+    protected void addDirectedEdge(int v, int w) {
         adjacencyList.computeIfAbsent(v, key -> new HashSet<>())
                      .add(w);
     }
