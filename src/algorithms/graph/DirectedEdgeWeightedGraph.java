@@ -12,10 +12,13 @@ public class DirectedEdgeWeightedGraph {
     private final Map<Integer, Collection<DirectedEdge>> adjacencyMap = new HashMap<>();
     private int numberOfEdges;
 
-    public void addEdge(DirectedEdge edge) {
-        int v = edge.from();
+    public void addEdge(int v, int w, double weight) {
+        addEdge(new DirectedEdge(v, w, weight));
+    }
 
-        adjacencyMap.computeIfAbsent(v, HashSet::new).add(edge);
+    public void addEdge(DirectedEdge edge) {
+        adjacencyMap.computeIfAbsent(edge.from(), HashSet::new).add(edge);
+        adjacencyMap.computeIfAbsent(edge.to(), HashSet::new);
         numberOfEdges++;
     }
 
@@ -50,6 +53,10 @@ public class DirectedEdgeWeightedGraph {
             return w;
         }
 
+        public double getWeight() {
+            return weight;
+        }
+
         @Override
         public int compareTo(DirectedEdge that) {
             if (this.weight < that.weight) return -1;
@@ -70,6 +77,11 @@ public class DirectedEdgeWeightedGraph {
             return Double.compare(that.weight, weight) == 0 &&
                     v == that.v &&
                     w == that.w;
+        }
+
+        @Override
+        public String toString() {
+            return v + "---" + weight + "--->" + w;
         }
     }
 }
