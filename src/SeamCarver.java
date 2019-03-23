@@ -8,6 +8,7 @@ public class SeamCarver {
     private Picture picture;
 
     public SeamCarver(Picture picture) { // create a seam carver object based on the given picture
+        if (picture == null) throw new IllegalArgumentException();
         this.picture = new Picture(picture);
     }
 
@@ -24,6 +25,9 @@ public class SeamCarver {
     }
 
     public double energy(int x, int y) { // energy of pixel at column x and row y
+        validateValue(x, width());
+        validateValue(y, height());
+
         return pixelEnergy(x, y);
     }
 
@@ -35,9 +39,8 @@ public class SeamCarver {
         int[] result = new int[width()];
         int index = 0;
         for (DirectedEdge edge : acyclicSP.pathTo(getFakeRightVertexIndex())) {
-            ++index;
             if (index < result.length) {
-                result[index] = indexToY(edge.to());
+                result[index++] = indexToY(edge.to());
             }
         }
 
@@ -51,7 +54,6 @@ public class SeamCarver {
         int[] result = new int[height()];
         int index = 0;
         for (DirectedEdge edge : acyclicSP.pathTo(getFakeBottomVertexIndex())) {
-            ++index;
             if (index < result.length) {
                 result[index++] = indexToX(edge.to());
             }
@@ -61,11 +63,12 @@ public class SeamCarver {
     }
 
     public void removeHorizontalSeam(int[] seam) { // remove horizontal seam from current picture
+        validateSeam(seam, height(), width());
         Picture newPicture = new Picture(width(), height() - 1);
         for (int col = 0; col < width(); col++) {
             int seamY = seam[col];
             for (int row = 0; row < height() - 1; row++) {
-                if (row <= seamY) {
+                if (row < seamY) {
                     newPicture.set(col, row, picture.get(col, row));
                 } else {
                     newPicture.set(col, row, picture.get(col, row + 1));
@@ -77,11 +80,12 @@ public class SeamCarver {
     }
 
     public void removeVerticalSeam(int[] seam) { // remove vertical seam from current picture
+        validateSeam(seam, width(), height());
         Picture newPicture = new Picture(width() - 1, height());
         for (int row = 0; row < height(); row++) {
             int seamX = seam[row];
             for (int col = 0; col < width() - 1; col++) {
-                if (col <= seamX) {
+                if (col < seamX) {
                     newPicture.set(col, row, picture.get(col, row));
                 } else {
                     newPicture.set(col, row, picture.get(col + 1, row));
@@ -91,6 +95,20 @@ public class SeamCarver {
         }
 
         picture = newPicture;
+    }
+
+    private void validateSeam(int[] seam, int max, int length) {
+        if (seam == null) throw new IllegalArgumentException();
+        if (seam.length != length) throw new IllegalArgumentException();
+        validateValue(seam[0], max);
+        for (int i = 1; i < seam.length; i++) {
+            if (Math.abs(seam[i - 1] - seam[i]) > 1) throw new IllegalArgumentException();
+            validateValue(seam[i], max);
+        }
+    }
+
+    private void validateValue(int value, int max) {
+        if (value < 0 || value >= max) throw new IllegalArgumentException();
     }
 
     // dual-gradient energy function
@@ -115,28 +133,12 @@ public class SeamCarver {
     }
 
     private double gradient(int x1, int y1, int x2, int y2) {
-        return pow2(rDif(x1, y1, x2, y2)) + pow2(gDif(x1, y1, x2, y2)) + pow2(bDif(x1, y1, x2, y2));
-    }
-
-    private double rDif(int x1, int y1, int x2, int y2) {
         int rgb1 = picture.getRGB(x1, y1);
         int rgb2 = picture.getRGB(x2, y2);
 
-        return toRed(rgb1) - toRed(rgb2);
-    }
-
-    private double gDif(int x1, int y1, int x2, int y2) {
-        int rgb1 = picture.getRGB(x1, y1);
-        int rgb2 = picture.getRGB(x2, y2);
-
-        return toGreen(rgb1) - toGreen(rgb2);
-    }
-
-    private double bDif(int x1, int y1, int x2, int y2) {
-        int rgb1 = picture.getRGB(x1, y1);
-        int rgb2 = picture.getRGB(x2, y2);
-
-        return toBlue(rgb1) - toBlue(rgb2);
+        return pow2(toRed(rgb1) - toRed(rgb2)) +
+                pow2(toGreen(rgb1) - toGreen(rgb2)) +
+                pow2(toBlue(rgb1) - toBlue(rgb2));
     }
 
     private EdgeWeightedDigraph picToWeightedDigraph(boolean horizontal) {
