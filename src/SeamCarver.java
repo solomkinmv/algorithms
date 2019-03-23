@@ -3,8 +3,6 @@ import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.Picture;
 
-import java.awt.*;
-
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
@@ -124,25 +122,24 @@ public class SeamCarver {
     }
 
     private double rDif(int x1, int y1, int x2, int y2) {
-        // todo: optimize
-        Color color1 = picture.get(x1, y1);
-        Color color2 = picture.get(x2, y2);
+        int rgb1 = picture.getRGB(x1, y1);
+        int rgb2 = picture.getRGB(x2, y2);
 
-        return color1.getRed() - color2.getRed();
+        return toRed(rgb1) - toRed(rgb2);
     }
 
     private double gDif(int x1, int y1, int x2, int y2) {
-        Color color1 = picture.get(x1, y1);
-        Color color2 = picture.get(x2, y2);
+        int rgb1 = picture.getRGB(x1, y1);
+        int rgb2 = picture.getRGB(x2, y2);
 
-        return color1.getGreen() - color2.getGreen();
+        return toGreen(rgb1) - toGreen(rgb2);
     }
 
     private double bDif(int x1, int y1, int x2, int y2) {
-        Color color1 = picture.get(x1, y1);
-        Color color2 = picture.get(x2, y2);
+        int rgb1 = picture.getRGB(x1, y1);
+        int rgb2 = picture.getRGB(x2, y2);
 
-        return color1.getBlue() - color2.getBlue();
+        return toBlue(rgb1) - toBlue(rgb2);
     }
 
     private EdgeWeightedDigraph picToWeightedDigraph(boolean horizontal) {
@@ -196,6 +193,25 @@ public class SeamCarver {
 
         return graph;
     }
+
+    private int toRed(int argb) {
+        return (argb >> 16) & 0xFF;
+    }
+
+    private int toGreen(int argb) {
+        return (argb >> 8) & 0xFF;
+    }
+
+    private int toBlue(int argb) {
+        return (argb) & 0xFF;
+    }
+
+    /*private int toBlue(int argb) {
+        int b = (argb)&0xFF;
+        int g = (argb>>8)&0xFF;
+        int r = (argb>>16)&0xFF;
+        int a = (argb>>24)&0xFF;
+    }*/
 
     private int getFakeTopVertexIndex() {
         return height() * width();
