@@ -10,7 +10,7 @@
 import edu.princeton.cs.algs4.Picture;
 import edu.princeton.cs.algs4.StdRandom;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class SCUtility {
     public static final String PICTURE_1x1 = "resources/coding_problems/sedgewick/coursera/course2/week2_mst_shortest_path/1x1.png";
@@ -18,6 +18,7 @@ public class SCUtility {
     public static final String PICTURE_3x4 = "resources/coding_problems/sedgewick/coursera/course2/week2_mst_shortest_path/3x4.png";
     public static final String PICTURE_3x7 = "resources/coding_problems/sedgewick/coursera/course2/week2_mst_shortest_path/3x7.png";
     public static final String PICTURE_12x10 = "resources/coding_problems/sedgewick/coursera/course2/week2_mst_shortest_path/12x10.png";
+    public static final String PICTURE_6x5 = "resources/coding_problems/sedgewick/coursera/course2/week2_mst_shortest_path/6x5.png";
     public static final String PICTURE_HJocean = "resources/coding_problems/sedgewick/coursera/course2/week2_mst_shortest_path/HJocean.png";
 
     // create random width-by-height array of tiles

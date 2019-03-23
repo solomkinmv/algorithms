@@ -3,34 +3,31 @@ import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.Picture;
 
-import static java.lang.Math.pow;
-import static java.lang.Math.sqrt;
-
 public class SeamCarver {
 
     private Picture picture;
 
-    public SeamCarver(Picture picture) {// create a seam carver object based on the given picture
+    public SeamCarver(Picture picture) { // create a seam carver object based on the given picture
         this.picture = new Picture(picture);
     }
 
-    public Picture picture() {// current picture
+    public Picture picture() { // current picture
         return picture;
     }
 
-    public int width() {// width of current picture
+    public int width() { // width of current picture
         return picture().width();
     }
 
-    public int height() {// height of current picture
+    public int height() { // height of current picture
         return picture().height();
     }
 
-    public double energy(int x, int y) {// energy of pixel at column x and row y
+    public double energy(int x, int y) { // energy of pixel at column x and row y
         return pixelEnergy(x, y);
     }
 
-    public int[] findHorizontalSeam() {// sequence of indices for horizontal seam
+    public int[] findHorizontalSeam() { // sequence of indices for horizontal seam
         // sequence of indices for vertical seam
         EdgeWeightedDigraph graph = picToWeightedDigraph(true);
         AcyclicSP acyclicSP = new AcyclicSP(graph, getFakeLeftVertexIndex());
@@ -38,7 +35,8 @@ public class SeamCarver {
         int[] result = new int[width()];
         int index = 0;
         for (DirectedEdge edge : acyclicSP.pathTo(getFakeRightVertexIndex())) {
-            if (++index < result.length) {
+            ++index;
+            if (index < result.length) {
                 result[index] = indexToY(edge.to());
             }
         }
@@ -46,14 +44,15 @@ public class SeamCarver {
         return result;
     }
 
-    public int[] findVerticalSeam() {// sequence of indices for vertical seam
+    public int[] findVerticalSeam() { // sequence of indices for vertical seam
         EdgeWeightedDigraph graph = picToWeightedDigraph(false);
         AcyclicSP acyclicSP = new AcyclicSP(graph, getFakeTopVertexIndex());
 
         int[] result = new int[height()];
         int index = 0;
         for (DirectedEdge edge : acyclicSP.pathTo(getFakeBottomVertexIndex())) {
-            if (++index < result.length) {
+            ++index;
+            if (index < result.length) {
                 result[index++] = indexToX(edge.to());
             }
         }
@@ -61,11 +60,10 @@ public class SeamCarver {
         return result;
     }
 
-    public void removeHorizontalSeam(int[] seam) {// remove horizontal seam from current picture
+    public void removeHorizontalSeam(int[] seam) { // remove horizontal seam from current picture
         Picture newPicture = new Picture(width(), height() - 1);
-        int[] horizontalSeam = seam;
         for (int col = 0; col < width(); col++) {
-            int seamY = horizontalSeam[col];
+            int seamY = seam[col];
             for (int row = 0; row < height() - 1; row++) {
                 if (row <= seamY) {
                     newPicture.set(col, row, picture.get(col, row));
@@ -78,11 +76,10 @@ public class SeamCarver {
         picture = newPicture;
     }
 
-    public void removeVerticalSeam(int[] seam) {// remove vertical seam from current picture
+    public void removeVerticalSeam(int[] seam) { // remove vertical seam from current picture
         Picture newPicture = new Picture(width() - 1, height());
-        int[] verticalSeam = seam;
         for (int row = 0; row < height(); row++) {
-            int seamX = verticalSeam[row];
+            int seamX = seam[row];
             for (int col = 0; col < width() - 1; col++) {
                 if (col <= seamX) {
                     newPicture.set(col, row, picture.get(col, row));
@@ -102,7 +99,7 @@ public class SeamCarver {
         if (x <= 0 || x >= width() - 1) return gradOnBorder;
         if (y <= 0 || y >= height() - 1) return gradOnBorder;
 
-        return sqrt(gradientX(x, y) + gradientY(x, y));
+        return Math.sqrt(gradientX(x, y) + gradientY(x, y));
     }
 
     private double gradientX(int x, int y) {
@@ -206,13 +203,6 @@ public class SeamCarver {
         return (argb) & 0xFF;
     }
 
-    /*private int toBlue(int argb) {
-        int b = (argb)&0xFF;
-        int g = (argb>>8)&0xFF;
-        int r = (argb>>16)&0xFF;
-        int a = (argb>>24)&0xFF;
-    }*/
-
     private int getFakeTopVertexIndex() {
         return height() * width();
     }
@@ -242,6 +232,6 @@ public class SeamCarver {
     }
 
     private double pow2(double value) {
-        return pow(value, 2);
+        return Math.pow(value, 2);
     }
 }
