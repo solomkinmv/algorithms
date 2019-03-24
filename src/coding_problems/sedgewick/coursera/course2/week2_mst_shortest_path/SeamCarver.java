@@ -1,3 +1,5 @@
+package coding_problems.sedgewick.coursera.course2.week2_mst_shortest_path;
+
 import edu.princeton.cs.algs4.AcyclicSP;
 import edu.princeton.cs.algs4.DirectedEdge;
 import edu.princeton.cs.algs4.EdgeWeightedDigraph;

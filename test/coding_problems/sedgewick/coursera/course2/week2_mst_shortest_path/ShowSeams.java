@@ -8,6 +8,8 @@
  *  Each image hides the previous one - drag them to see all three.
  *
  ******************************************************************************/
+package coding_problems.sedgewick.coursera.course2.week2_mst_shortest_path;
+
 
 import edu.princeton.cs.algs4.Picture;
 import edu.princeton.cs.algs4.StdOut;

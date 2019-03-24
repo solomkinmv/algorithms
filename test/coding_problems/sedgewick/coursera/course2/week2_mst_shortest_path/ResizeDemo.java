@@ -9,6 +9,8 @@
  *  Show the images and print time elapsed to screen.
  *
  ******************************************************************************/
+package coding_problems.sedgewick.coursera.course2.week2_mst_shortest_path;
+
 
 import edu.princeton.cs.algs4.Picture;
 import edu.princeton.cs.algs4.StdOut;

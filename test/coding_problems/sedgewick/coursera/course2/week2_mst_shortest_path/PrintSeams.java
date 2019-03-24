@@ -30,6 +30,8 @@
  *  Total energy = 2530.681960
  *
  ******************************************************************************/
+package coding_problems.sedgewick.coursera.course2.week2_mst_shortest_path;
+
 
 import edu.princeton.cs.algs4.Picture;
 import edu.princeton.cs.algs4.StdOut;

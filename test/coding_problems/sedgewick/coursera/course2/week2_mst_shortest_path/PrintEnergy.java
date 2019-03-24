@@ -8,6 +8,8 @@
  *  of each pixel as calculated by SeamCarver object.
  *
  ******************************************************************************/
+package coding_problems.sedgewick.coursera.course2.week2_mst_shortest_path;
+
 
 import edu.princeton.cs.algs4.Picture;
 import edu.princeton.cs.algs4.StdOut;
