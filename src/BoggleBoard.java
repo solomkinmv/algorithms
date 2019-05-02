@@ -7,8 +7,6 @@
  *
  ******************************************************************************/
 
-package coding_problems.sedgewick.coursera.course2.week4_substring_search;
-
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;

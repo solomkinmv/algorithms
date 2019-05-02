@@ -1,5 +1,3 @@
-package coding_problems.sedgewick.coursera.course2.week4_substring_search;
-
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
@@ -11,10 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import static java.util.Collections.emptyMap;
-import static java.util.Collections.emptySet;
-import static java.util.Collections.singleton;
 
 public class BoggleSolver {
 
@@ -34,8 +28,9 @@ public class BoggleSolver {
         In in = new In(dictionaryFilename);
         String[] dictionary = in.readAllStrings();
         BoggleSolver solver = new BoggleSolver(dictionary);
-//        String boardFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/board4x4.txt";
-        String boardFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/board-q.txt";
+        String boardFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/board4x4.txt";
+//        String boardFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/board-points26539.txt";
+//        String boardFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/board-q.txt";
 //        String boardFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/board-points1.txt";
         BoggleBoard board = new BoggleBoard(boardFilename);
         int score = 0;
@@ -61,6 +56,7 @@ public class BoggleSolver {
     // Returns the score of the given word if it is in the dictionary, zero otherwise.
     // (You can assume the word contains only the uppercase letters A through Z.)
     public int scoreOf(String word) {
+        if (!dictionary.contains(word)) return 0;
         int length = word.length();
 
         if (length < 3) return 0;
@@ -83,16 +79,18 @@ public class BoggleSolver {
     }
 
     private Set<String> wordsOnBoardFromPosition(BoggleBoard board, Position position) {
-        return wordsOnBoardFromPosition(board, position, dictionary.getRoot(), singleton(position));
+        return wordsOnBoardFromPosition(board, position, dictionary.getRoot(), Collections.singleton(position));
     }
 
     private Set<String> wordsOnBoardFromPosition(BoggleBoard board, Position position, Node rootNode, Set<Position> previousLetters) {
-        if (rootNode.isEmpty()) return emptySet();
+        if (rootNode.isEmpty()) return Collections.emptySet();
         Node node = rootNode.get(getLetter(board, position));
 
         Set<String> result = new HashSet<>();
         if (node.isWord()) {
-            result.add(node.getWord());
+            if (node.getWord().length() > 2) {
+                result.add(node.getWord());
+            }
         }
 
         for (Position pos : nextDirections(board, position, previousLetters)) {
@@ -203,10 +201,13 @@ class Trie {
         return root;
     }
 
+    public boolean contains(String word) {
+        return root.contains(word, 0);
+    }
 }
 
 class Node {
-    private static final Node EMPTY_NODE = new Node(false, emptyMap()) {
+    private static final Node EMPTY_NODE = new Node(false, Collections.emptyMap()) {
         @Override
         public void add(String word, int d) {
             throw new UnsupportedOperationException("Immutable empty node");
