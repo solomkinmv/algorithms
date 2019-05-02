@@ -294,7 +294,7 @@ class Node {
 }
 
 class Position {
-    private static final Map<Integer, Map<Integer, Position>> cache = new HashMap<>();
+    private static final Map<Integer, Map<Integer, Position>> CACHE = new HashMap<>();
 
     public final int i;
     public final int j;
@@ -305,7 +305,7 @@ class Position {
     }
 
     public static Position of(int i, int j) {
-        return cache.computeIfAbsent(i, key -> new HashMap<>())
+        return CACHE.computeIfAbsent(i, key -> new HashMap<>())
                     .computeIfAbsent(j, key -> new Position(i, j));
     }
 
