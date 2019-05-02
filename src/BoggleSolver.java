@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 public class BoggleSolver {
@@ -286,7 +285,7 @@ class Node {
     }
 
     public boolean contains(String word, int d) {
-        if (word.length() == d) {
+        if (word.length() == d && isWord()) {
             return true;
         }
         return get(word.charAt(d)).contains(word, d + 1);
