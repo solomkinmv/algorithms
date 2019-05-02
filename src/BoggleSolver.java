@@ -45,6 +45,7 @@ public class BoggleSolver {
             score += wordScore;
         }
         StdOut.println("Score = " + score);
+        System.out.println(solver.scoreOf("QUITE"));
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
@@ -287,10 +288,11 @@ class Node {
     }
 
     public boolean contains(String word, int d) {
-        if (word.length() == d && isWord()) {
-            return true;
+        if (word.length() == d) {
+            return isWord();
         }
-        return get(word.charAt(d)).contains(word, d + 1);
+        return getOrDefault(word.charAt(d))
+                .contains(word, d + 1);
     }
 
     private Node getOrDefault(char ch) {
