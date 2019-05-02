@@ -206,7 +206,7 @@ class Trie {
 }
 
 class Node {
-    private static final Node EMPTY_NODE = new Node(false, Collections.emptyMap()) {
+    private static final Node EMPTY_NODE = new Node(false, null) {
         @Override
         public void add(String word, int d) {
             throw new UnsupportedOperationException("Immutable empty node");
@@ -227,22 +227,23 @@ class Node {
             return false;
         }
     };
-    private final Map<Character, Node> nodes;
+    private final Node[] nodes;
     private boolean word;
     private String wordText;
+    private boolean empty = true;
 
-    Node(boolean word, Map<Character, Node> nodes) {
+    Node(boolean word, Node[] nodes) {
         this(word, nodes, null);
     }
 
-    Node(boolean word, Map<Character, Node> nodes, String wordText) {
+    Node(boolean word, Node[] nodes, String wordText) {
         this.nodes = nodes;
         this.word = word;
         this.wordText = wordText;
     }
 
     public static Node empty() {
-        return new Node(false, new HashMap<>(26));
+        return new Node(false, new Node[26]);
     }
 
     public void add(String word, int d) {
@@ -252,13 +253,14 @@ class Node {
             return;
         }
 
-        nodes.compute(word.charAt(d), (key, node) -> {
-            if (node == null) {
-                node = empty();
-            }
-            node.add(word, d + 1);
-            return node;
-        });
+        int index = charToIndex(word.charAt(d));
+        Node node = nodes[index];
+        if (node == null) {
+            node = empty();
+            nodes[index] = node;
+        }
+        node.add(word, d + 1);
+        empty = false;
     }
 
     public boolean isWord() {
@@ -274,14 +276,14 @@ class Node {
 
     public Node get(char ch) {
         if (ch == 'Q') {
-            return nodes.getOrDefault(ch, EMPTY_NODE)
+            return getOrDefault(ch)
                         .get('U');
         }
-        return nodes.getOrDefault(ch, EMPTY_NODE);
+        return getOrDefault(ch);
     }
 
     public boolean isEmpty() {
-        return nodes.isEmpty();
+        return empty;
     }
 
     public boolean contains(String word, int d) {
@@ -289,6 +291,19 @@ class Node {
             return true;
         }
         return get(word.charAt(d)).contains(word, d + 1);
+    }
+
+    private Node getOrDefault(char ch) {
+        int index = charToIndex(ch);
+        Node node = nodes[index];
+        if (node == null) {
+            return EMPTY_NODE;
+        }
+        return node;
+    }
+
+    private int charToIndex(char ch) {
+        return ch - 'A';
     }
 }
 
@@ -310,15 +325,11 @@ class Position {
 
     @Override
     public int hashCode() {
-        return Objects.hash(i, j);
+        return 7 * i + 13 * j;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
-        return i == position.i &&
-                j == position.j;
+        return this == o;
     }
 }
