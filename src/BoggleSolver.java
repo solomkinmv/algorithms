@@ -50,6 +50,7 @@ public class BoggleSolver {
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
     public Iterable<String> getAllValidWords(BoggleBoard board) {
+        precomputePositions(board);
         return wordsOnBoard(board);
     }
 
@@ -93,7 +94,8 @@ public class BoggleSolver {
             }
         }
 
-        for (Position pos : nextDirections(board, position, previousLetters)) {
+        for (Position pos : position.getNeighbors()) {
+            if (previousLetters.contains(pos)) continue;
             result.addAll(wordsOnBoardFromPosition(board, pos, node, copyAndAdd(previousLetters, pos)));
         }
 
@@ -106,67 +108,52 @@ public class BoggleSolver {
         return result;
     }
 
-    private List<Position> nextDirections(BoggleBoard board, Position position, Set<Position> previousLetters) {
+    private void precomputePositions(BoggleBoard board) {
+        for (int i = 0; i < board.rows(); i++) {
+            for (int j = 0; j < board.cols(); j++) {
+                Position position = Position.of(i, j);
+                position.setNeighbors(nextDirections(board, position));
+            }
+        }
+    }
+
+    private List<Position> nextDirections(BoggleBoard board, Position position) {
         List<Position> result = new ArrayList<>();
         // left
         boolean hasLeft = position.j > 0;
         if (hasLeft) {
-            Position nextPosition = nextPossiblePosition(position, 0, -1);
-            if (!previousLetters.contains(nextPosition)) {
-                result.add(nextPosition);
-            }
+            result.add(nextPossiblePosition(position, 0, -1));
         }
         // right
         boolean hasRight = position.j < board.cols() - 1;
         if (hasRight) {
-            Position nextPosition = nextPossiblePosition(position, 0, 1);
-            if (!previousLetters.contains(nextPosition)) {
-                result.add(nextPosition);
-            }
+            result.add(nextPossiblePosition(position, 0, 1));
         }
         // top
         boolean hasTop = position.i > 0;
         if (hasTop) {
-            Position nextPosition = nextPossiblePosition(position, -1, 0);
-            if (!previousLetters.contains(nextPosition)) {
-                result.add(nextPosition);
-            }
+            result.add(nextPossiblePosition(position, -1, 0));
         }
         // bottom
         boolean hasBottom = position.i < board.rows() - 1;
         if (hasBottom) {
-            Position nextPosition = nextPossiblePosition(position, 1, 0);
-            if (!previousLetters.contains(nextPosition)) {
-                result.add(nextPosition);
-            }
+            result.add(nextPossiblePosition(position, 1, 0));
         }
         // top-left
         if (hasTop && hasLeft) {
-            Position nextPosition = nextPossiblePosition(position, -1, -1);
-            if (!previousLetters.contains(nextPosition)) {
-                result.add(nextPosition);
-            }
+            result.add(nextPossiblePosition(position, -1, -1));
         }
         // top-right
         if (hasTop && hasRight) {
-            Position nextPosition = nextPossiblePosition(position, -1, 1);
-            if (!previousLetters.contains(nextPosition)) {
-                result.add(nextPosition);
-            }
+            result.add(nextPossiblePosition(position, -1, 1));
         }
         // bottom-left
         if (hasBottom && hasLeft) {
-            Position nextPosition = nextPossiblePosition(position, 1, -1);
-            if (!previousLetters.contains(nextPosition)) {
-                result.add(nextPosition);
-            }
+            result.add(nextPossiblePosition(position, 1, -1));
         }
         // bottom-right
         if (hasBottom && hasRight) {
-            Position nextPosition = nextPossiblePosition(position, 1, 1);
-            if (!previousLetters.contains(nextPosition)) {
-                result.add(nextPosition);
-            }
+            result.add(nextPossiblePosition(position, 1, 1));
         }
 
         return result;
@@ -278,7 +265,7 @@ class Node {
     public Node get(char ch) {
         if (ch == 'Q') {
             return getOrDefault(ch)
-                        .get('U');
+                    .get('U');
         }
         return getOrDefault(ch);
     }
@@ -314,10 +301,13 @@ class Position {
 
     public final int i;
     public final int j;
+    private List<Position> neighbors;
 
     private Position(int i, int j) {
         this.i = i;
         this.j = j;
+
+        System.out.println("POS CREATE");
     }
 
     public static Position of(int i, int j) {
@@ -333,5 +323,13 @@ class Position {
     @Override
     public boolean equals(Object o) {
         return this == o;
+    }
+
+    public List<Position> getNeighbors() {
+        return neighbors;
+    }
+
+    public void setNeighbors(List<Position> neighbors) {
+        this.neighbors = neighbors;
     }
 }
