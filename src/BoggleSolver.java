@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -51,7 +52,8 @@ public class BoggleSolver {
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
     public Iterable<String> getAllValidWords(BoggleBoard board) {
         precomputePositions(board);
-        return wordsOnBoard(board);
+
+        return new NodeToWordIterable(wordsOnBoard(board));
     }
 
     // Returns the score of the given word if it is in the dictionary, zero otherwise.
@@ -68,38 +70,36 @@ public class BoggleSolver {
         return 11;
     }
 
-    private Set<String> wordsOnBoard(BoggleBoard board) {
-        Set<String> result = new HashSet<>();
+    private Set<Node> wordsOnBoard(BoggleBoard board) {
+        Set<Node> result = new HashSet<>();
         for (int i = 0; i < board.rows(); i++) {
             for (int j = 0; j < board.cols(); j++) {
-                result.addAll(wordsOnBoardFromPosition(board, Position.of(i, j)));
+                wordsOnBoardFromPosition(board, Position.of(i, j), result);
             }
         }
 
         return result;
     }
 
-    private Set<String> wordsOnBoardFromPosition(BoggleBoard board, Position position) {
-        return wordsOnBoardFromPosition(board, position, dictionary.getRoot(), Collections.singleton(position));
+    private void wordsOnBoardFromPosition(BoggleBoard board, Position position, Set<Node> result) {
+        wordsOnBoardFromPosition(board, position, dictionary.getRoot(), Collections.singleton(position), result);
     }
 
-    private Set<String> wordsOnBoardFromPosition(BoggleBoard board, Position position, Node rootNode, Set<Position> previousLetters) {
-        if (rootNode.isEmpty()) return Collections.emptySet();
+    private void wordsOnBoardFromPosition(BoggleBoard board, Position position, Node rootNode, Set<Position> previousLetters, Set<Node> result) {
+        if (rootNode.isEmpty()) return;
         Node node = rootNode.get(getLetter(board, position));
 
-        Set<String> result = new HashSet<>();
         if (node.isWord()) {
             if (node.getWord().length() > 2) {
-                result.add(node.getWord());
+                result.add(node);
             }
         }
 
         for (Position pos : position.getNeighbors()) {
             if (previousLetters.contains(pos)) continue;
-            result.addAll(wordsOnBoardFromPosition(board, pos, node, copyAndAdd(previousLetters, pos)));
+            wordsOnBoardFromPosition(board, pos, node, copyAndAdd(previousLetters, pos), result);
         }
 
-        return result;
     }
 
     private Set<Position> copyAndAdd(Set<Position> previousLetters, Position nextPosition) {
@@ -169,6 +169,39 @@ public class BoggleSolver {
 
     private char getLetter(BoggleBoard board, Position position, int iShift, int jShift) {
         return board.getLetter(position.i + iShift, position.j + jShift);
+    }
+
+    private static class NodeToWordIterable implements Iterable<String> {
+
+        private final Iterable<Node> nodeIterable;
+
+        NodeToWordIterable(Iterable<Node> nodeIterable) {
+            this.nodeIterable = nodeIterable;
+        }
+
+        @Override
+        public Iterator<String> iterator() {
+            return new NodeToWordIterator(nodeIterable.iterator());
+        }
+    }
+
+    private static class NodeToWordIterator implements Iterator<String> {
+
+        private final Iterator<Node> nodeIterator;
+
+        NodeToWordIterator(Iterator<Node> nodeIterator) {
+            this.nodeIterator = nodeIterator;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nodeIterator.hasNext();
+        }
+
+        @Override
+        public String next() {
+            return nodeIterator.next().getWord();
+        }
     }
 
 }
@@ -306,8 +339,6 @@ class Position {
     private Position(int i, int j) {
         this.i = i;
         this.j = j;
-
-        System.out.println("POS CREATE");
     }
 
     public static Position of(int i, int j) {
