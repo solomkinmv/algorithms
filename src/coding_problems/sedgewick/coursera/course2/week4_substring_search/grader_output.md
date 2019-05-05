@@ -1,4 +1,4 @@
-# Aggregate score: 93.33
+# Aggregate score: 100
 
 See the Assessment Guide for information on how to interpret this report.
 
@@ -13,16 +13,16 @@ Checkstyle:   FAILED (0 errors, 8 warnings)
 
 Correctness:  13/13 tests passed
 Memory:       3/3 tests passed
-Timing:       6/9 tests passed
+Timing:       9/9 tests passed
 
-Aggregate score: 93.33%
+Aggregate score: 100.00%
 [Compilation: 5%, API: 5%, Spotbugs: 0%, PMD: 0%, Checkstyle: 0%, Correctness: 60%, Memory: 10%, Timing: 20%]
 
 ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
- 11K May  2 21:06 BoggleSolver.java
+ 11K May  5 11:46 BoggleSolver.java
 
 
 ********************************************************************************
@@ -58,9 +58,9 @@ BoggleSolver:
 
 % pmd .
 *-----------------------------------------------------------
-BoggleSolver.java:240: The user-supplied array 'nodes' is stored directly. [ArrayIsStoredDirectly]
-BoggleSolver.java:315: All instance (and static) variables must be 'private'. [OnlyPrivateInstanceVariables]
-BoggleSolver.java:316: All instance (and static) variables must be 'private'. [OnlyPrivateInstanceVariables]
+BoggleSolver.java:258: The user-supplied array 'nodes' is stored directly. [ArrayIsStoredDirectly]
+BoggleSolver.java:333: All instance (and static) variables must be 'private'. [OnlyPrivateInstanceVariables]
+BoggleSolver.java:334: All instance (and static) variables must be 'private'. [OnlyPrivateInstanceVariables]
 PMD ends with 3 warnings.
 
 
@@ -70,13 +70,13 @@ PMD ends with 3 warnings.
 % checkstyle *.java
 *-----------------------------------------------------------
 [WARN] BoggleSolver.java:1:1: Your program defines 4 outer types, but there should be only 1. [OuterTypeNumber]
-[WARN] BoggleSolver.java:189: The .java file must have exactly one top-level class. [OneTopLevelClass]
-[WARN] BoggleSolver.java:209: The .java file must have exactly one top-level class. [OneTopLevelClass]
-[WARN] BoggleSolver.java:210:44: Anonymous inner class length is 21 lines (max allowed is 20). [AnonInnerLength]
-[WARN] BoggleSolver.java:250:28: The local (or parameter) variable 'word' has the same name as an instance variable. Use a different name. [HiddenField]
-[WARN] BoggleSolver.java:290:36: The local (or parameter) variable 'word' has the same name as an instance variable. Use a different name. [HiddenField]
-[WARN] BoggleSolver.java:312: The .java file must have exactly one top-level class. [OneTopLevelClass]
-[WARN] BoggleSolver.java:334:34: Do not use the letter 'o' as a parameter variable name. It is hard to distinguish from the number '0'. [ParameterName]
+[WARN] BoggleSolver.java:207: The .java file must have exactly one top-level class. [OneTopLevelClass]
+[WARN] BoggleSolver.java:227: The .java file must have exactly one top-level class. [OneTopLevelClass]
+[WARN] BoggleSolver.java:228:44: Anonymous inner class length is 21 lines (max allowed is 20). [AnonInnerLength]
+[WARN] BoggleSolver.java:268:28: The local (or parameter) variable 'word' has the same name as an instance variable. Use a different name. [HiddenField]
+[WARN] BoggleSolver.java:308:36: The local (or parameter) variable 'word' has the same name as an instance variable. Use a different name. [HiddenField]
+[WARN] BoggleSolver.java:330: The .java file must have exactly one top-level class. [OneTopLevelClass]
+[WARN] BoggleSolver.java:353:34: Do not use the letter 'o' as a parameter variable name. It is hard to distinguish from the number '0'. [ParameterName]
 Checkstyle ends with 0 errors and 8 warnings.
 
 
@@ -221,17 +221,17 @@ Test 1: memory with dictionary-algs4.txt (must be <= 2x reference solution)
 ==> passed
 
 Test 2: memory with dictionary-shakespeare.txt (must be <= 2x reference solution)
-  * memory of dictionary[]           = 1925312 bytes
-  * memory of student   BoggleSolver = 17459368 bytes
-  * memory of reference BoggleSolver = 17472064 bytes
+  * memory of dictionary[]           = 1925392 bytes
+  * memory of student   BoggleSolver = 17453600 bytes
+  * memory of reference BoggleSolver = 17473944 bytes
   * student / reference              = 1.00
 ==> passed
 
 Test 3: memory with dictionary-yawl.txt (must be <= 2x reference solution)
-  * memory of dictionary[]           = 22596864 bytes
-  * memory of student   BoggleSolver = 178132648 bytes
-  * memory of reference BoggleSolver = 179336032 bytes
-  * student / reference              = 0.99
+  * memory of dictionary[]           = 22596808 bytes
+  * memory of student   BoggleSolver = 178486304 bytes
+  * memory of reference BoggleSolver = 179312840 bytes
+  * student / reference              = 1.00
 ==> passed
 
 
@@ -257,45 +257,45 @@ Test 1: timing constructor (must be <= 5x reference solution)
  *  dictionary-algs4.txt
     - student   solution time (in seconds): 0.01
     - reference solution time (in seconds): 0.01
-    - ratio:                                1.28
+    - ratio:                                1.29
 
 ==> passed
 
  *  dictionary-enable2k.txt
     - student   solution time (in seconds): 0.04
     - reference solution time (in seconds): 0.05
-    - ratio:                                0.75
+    - ratio:                                0.74
 
 ==> passed
 
  *  dictionary-yawl.txt
     - student   solution time (in seconds): 0.03
-    - reference solution time (in seconds): 0.05
-    - ratio:                                0.65
+    - reference solution time (in seconds): 0.04
+    - ratio:                                0.75
 
 ==> passed
 
  *  dictionary-zingarelli2005.txt
     - student   solution time (in seconds): 0.06
     - reference solution time (in seconds): 0.08
-    - ratio:                                0.72
+    - ratio:                                0.76
 
 ==> passed
 
 Test 2: timing getAllValidWords() for 5.0 seconds using dictionary-yawl.txt
         (must be <= 2x reference solution)
-    - reference solution calls per second: 9453.70
-    - student   solution calls per second: 415.13
-    - reference / student ratio:           22.77
+    - reference solution calls per second: 8238.50
+    - student   solution calls per second: 4781.61
+    - reference / student ratio:           1.72
 
 => passed    student <= 10000x reference
 => passed    student <=    25x reference
-=> FAILED    student <=    10x reference
-=> FAILED    student <=     5x reference
-=> FAILED    student <=     2x reference
+=> passed    student <=    10x reference
+=> passed    student <=     5x reference
+=> passed    student <=     2x reference
 
 
-Total: 6/9 tests passed!
+Total: 9/9 tests passed!
 
 
 ================================================================

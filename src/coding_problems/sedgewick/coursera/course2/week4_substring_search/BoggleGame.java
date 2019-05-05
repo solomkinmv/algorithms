@@ -1,3 +1,5 @@
+package coding_problems.sedgewick.coursera.course2.week4_substring_search;
+
 /******************************************************************************
  *  Compilation:  javac BoggleGame.java
  *  Execution:    java BoggleGame [m n]
