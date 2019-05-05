@@ -24,14 +24,10 @@ public class BoggleSolver {
 
     public static void main(String[] args) {
         String dictionaryFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/dictionary-algs4.txt";
-//        String dictionaryFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/dictionary-zingarelli2005.txt";
         In in = new In(dictionaryFilename);
         String[] dictionary = in.readAllStrings();
         BoggleSolver solver = new BoggleSolver(dictionary);
         String boardFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/board4x4.txt";
-//        String boardFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/board-points26539.txt";
-//        String boardFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/board-q.txt";
-//        String boardFilename = "resources/coding_problems/sedgewick/coursera/course2/week4_substring_search/boggle/board-points1.txt";
         BoggleBoard board = new BoggleBoard(boardFilename);
         int score = 0;
 
@@ -46,7 +42,6 @@ public class BoggleSolver {
             score += wordScore;
         }
         StdOut.println("Score = " + score);
-        System.out.println(solver.scoreOf("QUITE"));
     }
 
     // Returns the set of all valid words in the given Boggle board, as an Iterable.
