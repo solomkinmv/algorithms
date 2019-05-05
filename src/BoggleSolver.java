@@ -82,11 +82,15 @@ public class BoggleSolver {
     }
 
     private void wordsOnBoardFromPosition(BoggleBoard board, Position position, Set<Node> result) {
-        wordsOnBoardFromPosition(board, position, dictionary.getRoot(), Collections.singleton(position), result);
+        wordsOnBoardFromPosition(board, position, dictionary.getRoot(), new HashSet<>(), result);
     }
 
     private void wordsOnBoardFromPosition(BoggleBoard board, Position position, Node rootNode, Set<Position> previousLetters, Set<Node> result) {
         if (rootNode.isEmpty()) return;
+        if (previousLetters.contains(position)) return;
+
+        previousLetters.add(position);
+
         Node node = rootNode.get(getLetter(board, position));
 
         if (node.isWord()) {
@@ -96,16 +100,10 @@ public class BoggleSolver {
         }
 
         for (Position pos : position.getNeighbors()) {
-            if (previousLetters.contains(pos)) continue;
-            wordsOnBoardFromPosition(board, pos, node, copyAndAdd(previousLetters, pos), result);
+            wordsOnBoardFromPosition(board, pos, node, previousLetters, result);
         }
 
-    }
-
-    private Set<Position> copyAndAdd(Set<Position> previousLetters, Position nextPosition) {
-        Set<Position> result = new HashSet<>(previousLetters);
-        result.add(nextPosition);
-        return result;
+        previousLetters.remove(position);
     }
 
     private void precomputePositions(BoggleBoard board) {
