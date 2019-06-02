@@ -1,4 +1,3 @@
-@SuppressWarnings("Duplicates")
 public class CircularSuffixArray {
 
     private final String str;
@@ -12,7 +11,8 @@ public class CircularSuffixArray {
     }
 
     public static void main(String[] args) {  // unit testing (required)
-        String str = "ABRACADABRA!";
+        String str = "AAAAAAAAAA";
+//        String str = "ABRACADABRA!";
         CircularSuffixArray circularSuffixArray = new CircularSuffixArray(str);
         for (int i = 0; i < str.length(); i++) {
             System.out.println("i = " + i + ", index = " + circularSuffixArray.index(i));
@@ -44,6 +44,7 @@ public class CircularSuffixArray {
 
     private void threeWayRadixQuicksort(int[] arr, int lo, int hi, int d) {
         if (hi <= lo) return;
+        if (d >= arr.length) return;
 
         int lt = lo, gt = hi;
         int v = charAt(arr[lo], d);
