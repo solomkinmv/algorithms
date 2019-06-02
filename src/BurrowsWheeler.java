@@ -1,8 +1,6 @@
 import edu.princeton.cs.algs4.BinaryStdIn;
 import edu.princeton.cs.algs4.BinaryStdOut;
 
-import java.util.Arrays;
-
 public class BurrowsWheeler {
 
     private static final int ASCII_SIZE = 256;
@@ -53,8 +51,6 @@ public class BurrowsWheeler {
             sorted[count[t[i]]] = t[i];
             count[t[i]]++;
         }
-
-        System.out.println(Arrays.toString(next));
 
         int p = first;
         for (int i = 0; i < t.length; i++) {
