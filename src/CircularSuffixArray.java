@@ -1,5 +1,3 @@
-package coding_problems.sedgewick.coursera.course2.week5_data_compression;
-
 @SuppressWarnings("Duplicates")
 public class CircularSuffixArray {
 
