@@ -1,3 +1,5 @@
+package coding_problems.sedgewick.coursera.course2.week5_data_compression;
+
 public class CircularSuffixArray {
 
     private final String str;

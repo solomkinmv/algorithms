@@ -1,3 +1,5 @@
+package coding_problems.sedgewick.coursera.course2.week5_data_compression;
+
 import edu.princeton.cs.algs4.BinaryStdIn;
 import edu.princeton.cs.algs4.BinaryStdOut;
 
