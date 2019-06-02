@@ -39,8 +39,6 @@ public class BurrowsWheeler {
         int[] next = new int[t.length];
         char[] sorted = new char[t.length];
 
-        System.out.println(Arrays.toString(t));
-
         int[] count = new int[ASCII_SIZE + 1];
         for (int i = 0; i < t.length; i++) {
             count[t[i] + 1]++;
