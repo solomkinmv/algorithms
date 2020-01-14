@@ -1,9 +1,10 @@
 # Python compiled files
 *pyc
 
-# Java compiled fiels
+# Java compiled files
 *.class
 
-# PyCharm stuff
+# JetBrains stuff
 .idea
 out
+*.iml
